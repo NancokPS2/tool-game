@@ -1,16 +1,14 @@
 using System.Collections.Generic;
-using ToolGame.Machine.MachinePart;
 
-namespace ToolGame.Machine.Context;
+namespace ToolGame.Context;
 
-public class AddPowerMachineContext
+public class ChangePowerMachineContext
 {
     public Machine3D Machine;
     public List<IPowerContainer> PowerContainers;
     public long Amount;
-    public long Remainder;
 
-    public AddPowerMachineContext(Machine3D machine, List<IPowerContainer> powerContainers, long amount)
+    public ChangePowerMachineContext(Machine3D machine, List<IPowerContainer> powerContainers, long amount)
     {
         Machine = machine;
         PowerContainers = powerContainers;

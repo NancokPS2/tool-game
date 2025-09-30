@@ -1,17 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
-using ToolGame.Machine.Context;
-using ToolGame.Machine.MachinePart;
 
-namespace ToolGame.Machine;
+namespace ToolGame.Machinery;
 
-public abstract partial class Machine3D : Node3D, IMachine
+public abstract partial class Machine3D : Node3D
 {
+	public delegate void PartChangeEvent(Machine3D machine, MachinePart3D part);
+	public event PartChangeEvent? PartAdded;
+	public event PartChangeEvent? PartRemoved;
 
-    #region Part Management
-    protected List<MachineSlot> MachineSlots = new();
+	public override void _Ready()
+	{
+		base._Ready();
+		AddToGroup(NodeGroups.MACHINE);
+	}
+
+	#region Part Management
+	protected List<MachineSlot> MachineSlots = new();
 
     public virtual MachinePart3D? GetPart<TPart>() where TPart : MachinePart3D
     {
@@ -32,41 +38,9 @@ public abstract partial class Machine3D : Node3D, IMachine
     {
         return GetParts().OfType<TPart>().Count() > 0;
     }
-
-    public virtual bool TryInsertPart(InsertMachinePartContext context)
-    {
-        if (context.Machine != this || !MachineSlots.Contains(context.Slot))
-            throw new Exception();
-
-        context.Slot.Part = context.Part;
-        return true;
-    }
-
-    public virtual void ProcessParts(long delta)
-    {
-        foreach (MachinePart3D item in GetParts())
-        {
-            item.PartProcess(new (delta, this));
-        }
-    }
     #endregion
 
     #region Power
-    public void PowerAdd(AddPowerMachineContext context)
-    {
-        foreach (var item in context.PowerContainers)
-        {
-            long powerAdded = Math.Clamp(context.Amount, 0, item.GetCapacityRemaining());
-            item.StoredPower += powerAdded;
-            context.Amount -= powerAdded;
-
-            if(context.Amount <= 0)
-                break;
-        }
-    }
-
-
-
     public long GetPowerRemaining()
     {
         long total = 0;

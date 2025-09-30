@@ -1,4 +1,4 @@
-namespace ToolGame.Machine.Context;
+namespace ToolGame.Context;
 
 public class ProcessMachinePartContext
 {

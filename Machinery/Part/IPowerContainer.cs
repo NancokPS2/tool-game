@@ -1,6 +1,6 @@
 using System;
 
-namespace ToolGame.Machine.MachinePart;
+namespace ToolGame.Machinery;
 
 public interface IPowerContainer
 {

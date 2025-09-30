@@ -1,4 +1,4 @@
-namespace ToolGame.Machine.MachinePart;
+namespace ToolGame.Machinery;
 
 public enum EPartCategory
 {

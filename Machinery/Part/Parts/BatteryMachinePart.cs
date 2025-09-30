@@ -1,0 +1,16 @@
+using Godot;
+using ToolGame.Machine.Context;
+
+namespace ToolGame.Machinery;
+
+public partial class BatteryMachinePart : MachinePart3D, IPowerContainer
+{
+    public bool ProvidesPower { get; set; }
+	public long StoredPower { get => EndlessPower ? StoredPowerMax : storedPower; set =>  storedPower = value; }
+	public long StoredPowerMax { get; set; }
+
+	[Export]
+    public bool EndlessPower;
+
+	private long storedPower;
+}
