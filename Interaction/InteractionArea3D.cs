@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ToolGame.Interaction;
 
+[GlobalClass]
 public partial class InteractionArea3D : Area3D, IInteractionTarget
 {
 	public ICreature? CurrentInteractor { get; set; }

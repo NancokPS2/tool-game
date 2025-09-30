@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace ToolGame.Machinery;
@@ -10,6 +11,14 @@ public abstract partial class Machine3D : Node3D
 	public event PartChangeEvent? PartAdded;
 	public event PartChangeEvent? PartRemoved;
 
+	protected List<MachineSlot3D> MachineSlots = new();
+	[Export]
+	protected Godot.Collections.Array<MachineSlot3D> machineSlots
+	{
+		set => MachineSlots = new(value);
+		get => new(MachineSlots);
+	}
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -17,12 +26,10 @@ public abstract partial class Machine3D : Node3D
 	}
 
 	#region Part Management
-	protected List<MachineSlot> MachineSlots = new();
-
     public virtual MachinePart3D? GetPart<TPart>() where TPart : MachinePart3D
-    {
-        return GetParts().OfType<TPart>().Single();
-    }
+	{
+		return GetParts().OfType<TPart>().Single();
+	}
 
     public virtual List<MachinePart3D> GetParts()
     {

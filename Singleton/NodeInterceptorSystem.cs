@@ -21,6 +21,7 @@ public partial class NodeInterceptorSystem : Node
 	{
 		NodeManager[] nodes = GetTree().GetNodesInGroup(NodeGroups.NODE_MANAGER).OfType<NodeManager>().ToArray();
 		return nodes;
+
 	}
 
 	private void OnNodeAdded(Node node)

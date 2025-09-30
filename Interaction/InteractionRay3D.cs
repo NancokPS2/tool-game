@@ -5,8 +5,27 @@ using System.Threading.Tasks;
 
 namespace ToolGame.Interaction;
 
-public partial class InteractionRay3D : RayCast3D
+/// <summary>
+/// Detects physical objects like areas and physics bodies.
+/// </summary>
+[GlobalClass]
+public partial class InteractionRay3D : RayCast3D, IInteractionSource
 {
+	[Export]
+	protected Node? responsible
+	{
+		set => Responsible = value as ICreature;
+		get => Responsible as Node;
+	}
+	public ICreature? Responsible { get; set; }
+
+	public IInteractionTarget? TargetCurrent { get; set; }
+
+	public bool InteractionActive { get; set; }
+
+	[Export]
+	protected bool UseGlobalInput = true;
+
 	public override void _EnterTree()
 	{
 		base._EnterTree();
@@ -14,17 +33,23 @@ public partial class InteractionRay3D : RayCast3D
 		AddToGroup(NodeGroups.INTERACTION_RAY);
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		base._Input(@event);
+		if (@event.IsActionPressed(InputNames.INTERACT))
+		{
+			;
+		}
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
 		var collider = GetCollider();
-		if (collider is InteractionArea3D inter)
+		if (collider is IInteractionTarget inter)
 		{
+			TargetCurrent = inter;
 		}
-	}
-
-	public void ForceInteraction(IInteractionTarget target)
-	{
-
+		InteractionActive = Godot.Input.IsActionPressed(InputNames.INTERACT);
 	}
 }

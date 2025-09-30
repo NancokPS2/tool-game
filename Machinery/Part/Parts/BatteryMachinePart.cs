@@ -1,6 +1,3 @@
-using Godot;
-using ToolGame.Machine.Context;
-
 namespace ToolGame.Machinery;
 
 public partial class BatteryMachinePart : MachinePart3D, IPowerContainer
