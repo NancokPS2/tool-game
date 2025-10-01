@@ -7,9 +7,6 @@ namespace ToolGame.Machinery;
 
 public abstract partial class Machine3D : Node3D
 {
-	public delegate void PartChangeEvent(Machine3D machine, MachinePart3D part);
-	public event PartChangeEvent? PartAdded;
-	public event PartChangeEvent? PartRemoved;
 
 	protected List<MachineSlot3D> MachineSlots = new();
 	[Export]

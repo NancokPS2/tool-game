@@ -6,13 +6,13 @@
 [ext_resource type="Script" uid="uid://cgwpxgcxb5e4b" path="res://Machinery/Machine/MachineSlot3D.cs" id="3_jka67"]
 [ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Interaction/InteractionRay3D.cs" id="5_i5arm"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3fl7"]
 cull_mode = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_jka67"]
 material = SubResource("StandardMaterial3D_r3fl7")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_r3fl7"]
 
@@ -30,12 +30,11 @@ script = ExtResource("3_jka67")
 categoriesAllowed = Array[int]([0])
 metadata/_custom_type_script = "uid://cgwpxgcxb5e4b"
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratorMachine/MachineSlot3D"]
+shape = SubResource("BoxShape3D_r3fl7")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GeneratorMachine/MachineSlot3D"]
 mesh = SubResource("BoxMesh_jka67")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratorMachine/MachineSlot3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.02185, 0, 0)
-shape = SubResource("BoxShape3D_r3fl7")
 
 [node name="MachineMesh" type="MeshInstance3D" parent="GeneratorMachine"]
 mesh = SubResource("BoxMesh_r3fl7")

@@ -33,15 +33,6 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 		AddToGroup(NodeGroups.INTERACTION_RAY);
 	}
 
-	public override void _Input(InputEvent @event)
-	{
-		base._Input(@event);
-		if (@event.IsActionPressed(InputNames.INTERACT))
-		{
-			;
-		}
-	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
@@ -50,6 +41,5 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 		{
 			TargetCurrent = inter;
 		}
-		InteractionActive = Godot.Input.IsActionPressed(InputNames.INTERACT);
 	}
 }

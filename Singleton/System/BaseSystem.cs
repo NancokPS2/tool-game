@@ -15,25 +15,38 @@ public abstract partial class BaseSystem : Node
 	{
 		get
 		{
-			return SyncToProcess;
+			return syncToProcess;
 		}
 		set
 		{
-			SyncToProcess = value;
-			SetProcess(SyncToProcess == EProcessMode.PROCESS);
-			SetPhysicsProcess(SyncToProcess == EProcessMode.PHYSICS);
-			SystemProcessEnabled = SyncToProcess == EProcessMode.SYSTEM;
+			syncToProcess = value;
+			SetProcess(syncToProcess == EProcessMode.PROCESS);
+			SetPhysicsProcess(syncToProcess == EProcessMode.PHYSICS);
+			SystemProcessEnabled = syncToProcess == EProcessMode.SYSTEM;
 		}
 	}
+	protected EProcessMode syncToProcess;
 	private bool SystemProcessEnabled;
 
-	public void SystemProcess(long delta)
+	public void SystemProcess(double delta)
 	{
 		if (!SystemProcessEnabled) return;
 		_SystemProcess(delta);
 	}
 
-	public virtual void _SystemProcess(long delta)
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+		_SystemProcess(delta);
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+		_SystemProcess(delta);
+	}
+
+	public virtual void _SystemProcess(double delta)
 	{
 	}
 }

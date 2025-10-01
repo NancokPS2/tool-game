@@ -17,7 +17,7 @@ public partial class InteractionSystem : BaseSystem
 
 	}
 
-	public override void _SystemProcess(long delta)
+	public override void _SystemProcess(double delta)
 	{
 		base._SystemProcess(delta);
 
@@ -29,6 +29,9 @@ public partial class InteractionSystem : BaseSystem
 
 		foreach (var source in interactors)
 		{
+			//Enable it based on input.
+			source.InteractionActive = GetActivationInput(source);
+
 			//The target is valid and the interaction is active, interact!
 			if (source.TargetCurrent is IInteractionTarget target && source.InteractionActive)
 			{
@@ -44,5 +47,10 @@ public partial class InteractionSystem : BaseSystem
 				);
 			}
 		}
+	}
+
+	public bool GetActivationInput(IInteractionSource source)
+	{
+		return Godot.Input.IsActionPressed(InputNames.INTERACT);
 	}
 }

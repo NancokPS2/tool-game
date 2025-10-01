@@ -1,18 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2m4cpfdefl0i"]
+[gd_scene load_steps=6 format=3 uid="uid://c2m4cpfdefl0i"]
 
 [ext_resource type="Script" uid="uid://db6ewsuwaef5p" path="res://Singleton/System/InteractionSystem.cs" id="1_2cu5w"]
+[ext_resource type="Script" uid="uid://bqpwjvx5jksa6" path="res://Scenes/Systems.cs" id="1_r8ppy"]
 [ext_resource type="Script" uid="uid://b5xkac5hxmixf" path="res://Singleton/System/InputSystem.cs" id="2_r8ppy"]
 [ext_resource type="Script" uid="uid://d3fqcsalkpygb" path="res://Singleton/System/PartSystem.cs" id="3_id7vc"]
 [ext_resource type="Script" uid="uid://cbojprvd01uoi" path="res://Singleton/System/PowerSystem.cs" id="4_hg1mw"]
 
-[node name="Systems" type="Node"]
+[node name="Systems" type="Node" node_paths=PackedStringArray("SystemTimerNode")]
+script = ExtResource("1_r8ppy")
+SystemTimerNode = NodePath("Timer")
 
 [node name="InteractionSystem" type="Node" parent="."]
 script = ExtResource("1_2cu5w")
+SyncToProcess = 2
 metadata/_custom_type_script = "uid://db6ewsuwaef5p"
 
 [node name="InputSystem" type="Node" parent="."]
 script = ExtResource("2_r8ppy")
+SyncToProcess = 2
 metadata/_custom_type_script = "uid://b5xkac5hxmixf"
 
 [node name="PartSystem" type="Node" parent="."]
@@ -22,3 +27,8 @@ metadata/_custom_type_script = "uid://d3fqcsalkpygb"
 [node name="PowerSystem" type="Node" parent="."]
 script = ExtResource("4_hg1mw")
 metadata/_custom_type_script = "uid://cbojprvd01uoi"
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+autostart = true

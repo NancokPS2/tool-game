@@ -9,7 +9,7 @@ namespace ToolGame.Singleton.System;
 [GlobalClass]
 public partial class InputSystem : BaseSystem
 {
-	public override void _SystemProcess(long delta)
+	public override void _SystemProcess(double delta)
 	{
 		base._SystemProcess(delta);
 	}
