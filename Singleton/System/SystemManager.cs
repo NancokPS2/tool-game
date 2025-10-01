@@ -3,7 +3,8 @@ using System;
 using System.Linq;
 using ToolGame.Singleton.System;
 
-public partial class Systems : Node
+[GlobalClass]
+public partial class SystemManager : Node
 {
 	[Export]
 	protected Timer SystemTimerNode = null!;
