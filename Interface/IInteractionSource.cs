@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ToolGame.Interface;
 
-public interface IInteractionSource
+public interface IInteractionSource : IComponent
 {
-	public ICreature? Responsible { set; get; }
-	public IInteractionTarget? TargetCurrent { set; get; }
+	public IMob? Responsible { set; get; }
+	public IInteractionTarget? CurrentDetected { set; get; }
 	public bool InteractionActive { set; get; }
 }

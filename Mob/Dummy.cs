@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace ToolGame.Mob;
 
 [GlobalClass]
-public partial class Dummy : Node3D, ICreature
+public partial class Dummy : Node3D
 {
 
 }

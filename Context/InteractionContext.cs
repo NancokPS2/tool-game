@@ -2,11 +2,11 @@ namespace ToolGame.Context;
 
 public class InteractionContext
 {
-	public ICreature Responsible;
+	public IMob Responsible;
 	public IInventory? Hand;
 	public IInteractionTarget Target;
 
-	public InteractionContext(ICreature responsible, IInventory? hand, IInteractionTarget target)
+	public InteractionContext(IMob responsible, IInventory? hand, IInteractionTarget target)
 	{
 		Responsible = responsible;
 		Hand = hand;

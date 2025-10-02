@@ -14,12 +14,13 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 	[Export]
 	protected Node? responsible
 	{
-		set => Responsible = value as ICreature;
+		set => Responsible = value as IMob;
 		get => Responsible as Node;
 	}
-	public ICreature? Responsible { get; set; }
 
-	public IInteractionTarget? TargetCurrent { get; set; }
+	public IMob? Responsible { get; set; }
+
+	public IInteractionTarget? CurrentDetected { get; set; }
 
 	public bool InteractionActive { get; set; }
 
@@ -30,16 +31,8 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 	{
 		base._EnterTree();
 		CollideWithAreas = true;
-		AddToGroup(NodeGroups.INTERACTION_RAY);
+
 	}
 
-	public override void _PhysicsProcess(double delta)
-	{
-		base._PhysicsProcess(delta);
-		var collider = GetCollider();
-		if (collider is IInteractionTarget inter)
-		{
-			TargetCurrent = inter;
-		}
-	}
+	public string[] GetProcessingGroups() => [CompGroups.INTERACTION];
 }

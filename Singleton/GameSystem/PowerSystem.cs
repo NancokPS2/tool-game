@@ -1,4 +1,4 @@
-namespace ToolGame.Singleton.System;
+namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
 public partial class PowerSystem : MachinerySystem

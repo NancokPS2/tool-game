@@ -5,21 +5,14 @@ using System.Linq;
 
 namespace ToolGame.Machinery;
 
-public abstract partial class Machine3D : Node3D
+public abstract partial class Machine3D : Node3D, IEntity
 {
-
 	protected List<MachineSlot3D> MachineSlots = new();
 	[Export]
 	protected Godot.Collections.Array<MachineSlot3D> machineSlots
 	{
 		set => MachineSlots = new(value);
 		get => new(MachineSlots);
-	}
-
-	public override void _Ready()
-	{
-		base._Ready();
-		AddToGroup(NodeGroups.MACHINE);
 	}
 
 	#region Part Management
@@ -61,5 +54,5 @@ public abstract partial class Machine3D : Node3D
         GetParts<IPowerConsumer>().ForEach(x => total += x.PowerConsumed);
         return total;
     }
-    #endregion
+	#endregion
 }

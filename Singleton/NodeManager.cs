@@ -10,7 +10,7 @@ public abstract partial class NodeManager : Node
 	public override void _EnterTree()
 	{
 		base._EnterTree();
-		AddToGroup(NodeGroups.NODE_MANAGER);
+		AddToGroup(CompGroups.NODE_MANAGER);
 	}
 
 	protected abstract bool IsValidNode(Node node);

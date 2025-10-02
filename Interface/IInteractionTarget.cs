@@ -1,6 +1,6 @@
 namespace ToolGame.Interface;
 
-public interface IInteractionTarget
+public interface IInteractionTarget : IComponent
 {
-	public ICreature? CurrentInteractor { set; get; }
+	//public IMob? CurrentInteractor { set; get; }
 }

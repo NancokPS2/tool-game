@@ -1,39 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2m4cpfdefl0i"]
+[gd_scene load_steps=7 format=3 uid="uid://c2m4cpfdefl0i"]
 
-[ext_resource type="Script" uid="uid://db6ewsuwaef5p" path="res://Singleton/System/InteractionSystem.cs" id="1_2cu5w"]
-[ext_resource type="Script" uid="uid://bqpwjvx5jksa6" path="res://Singleton/System/SystemManager.cs" id="1_r8ppy"]
-[ext_resource type="Script" uid="uid://b5xkac5hxmixf" path="res://Singleton/System/InputSystem.cs" id="2_r8ppy"]
-[ext_resource type="Script" uid="uid://d3fqcsalkpygb" path="res://Singleton/System/PartSystem.cs" id="3_id7vc"]
-[ext_resource type="Script" uid="uid://cbojprvd01uoi" path="res://Singleton/System/PowerSystem.cs" id="4_hg1mw"]
+[ext_resource type="Script" uid="uid://bqpwjvx5jksa6" path="res://Singleton/GameSystem/SystemManager.cs" id="1_1ymfb"]
+[ext_resource type="Script" uid="uid://c5s0lw2g1ud3y" path="res://Singleton/ECSManagementSystem.cs" id="2_1ymfb"]
+[ext_resource type="Script" uid="uid://db6ewsuwaef5p" path="res://Singleton/GameSystem/InteractionSystem.cs" id="3_1ymfb"]
+[ext_resource type="Script" uid="uid://b5xkac5hxmixf" path="res://Singleton/GameSystem/InputSystem.cs" id="4_1ymfb"]
+[ext_resource type="Script" uid="uid://d3fqcsalkpygb" path="res://Singleton/GameSystem/PartSystem.cs" id="5_1ymfb"]
+[ext_resource type="Script" uid="uid://cbojprvd01uoi" path="res://Singleton/GameSystem/PowerSystem.cs" id="6_cmqsb"]
 
 [node name="Systems" type="Node" node_paths=PackedStringArray("SystemTimerNode")]
-script = ExtResource("1_r8ppy")
+script = ExtResource("1_1ymfb")
 SystemTimerNode = NodePath("Timer")
 metadata/_custom_type_script = "uid://bqpwjvx5jksa6"
 
+[node name="ComponentManagementSystem" type="Node" parent="."]
+editor_description = "This node gets initialized on TreeEntered"
+script = ExtResource("2_1ymfb")
+metadata/_custom_type_script = "uid://c5s0lw2g1ud3y"
+
 [node name="InteractionSystem" type="Node" parent="."]
-script = ExtResource("1_2cu5w")
+script = ExtResource("3_1ymfb")
 SyncToProcess = 2
 metadata/_custom_type_script = "uid://db6ewsuwaef5p"
 
 [node name="InputSystem" type="Node" parent="."]
-script = ExtResource("2_r8ppy")
+script = ExtResource("4_1ymfb")
 SyncToProcess = 2
 metadata/_custom_type_script = "uid://b5xkac5hxmixf"
 
 [node name="PartSystem" type="Node" parent="."]
-script = ExtResource("3_id7vc")
+script = ExtResource("5_1ymfb")
 metadata/_custom_type_script = "uid://d3fqcsalkpygb"
 
 [node name="PowerSystem" type="Node" parent="."]
-script = ExtResource("4_hg1mw")
+script = ExtResource("6_cmqsb")
 metadata/_custom_type_script = "uid://cbojprvd01uoi"
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
 wait_time = 0.05
 autostart = true
-
-[node name="PopupMenu" type="PopupMenu" parent="."]
-item_count = 1
-item_0/id = 0

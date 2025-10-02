@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
-using ToolGame.Singleton.System;
+using ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
 public partial class SystemManager : Node

@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Godot;
 using ToolGame.Singleton;
 
-namespace ToolGame.Singleton.System;
+namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
 public abstract partial class MachinerySystem : BaseSystem
 {
-
-	protected Dictionary<Machine3D, List<MachinePart3D>> MachinePartsTracked = new();
+	
 }

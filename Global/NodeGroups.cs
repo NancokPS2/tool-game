@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace ToolGame;
 
-public static class NodeGroups
+public static class CompGroups
 {
 	public const string NODE_MANAGER = "NodeManagerGroup";
-	public const string MACHINE = "NodeMachineGroup";
-	public const string INTERACTION_RAY = "NodeInteractionRayGroup";
+	public const string MOBILE = "SysGroupMobile";
+	public const string INTERACTION = "SysGroupInteraction";
+	public const string INPUT = "SysGroupInput";
 }

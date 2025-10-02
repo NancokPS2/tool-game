@@ -8,4 +8,5 @@ namespace ToolGame;
 public static class InputNames
 {
 	public const string INTERACT = "interact";
+	public static readonly string[] INPUTS_ARRAY = [INTERACT];
 }

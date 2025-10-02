@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ToolGame.Singleton.System;
+namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
 public abstract partial class BaseSystem : Node
@@ -48,5 +48,11 @@ public abstract partial class BaseSystem : Node
 
 	public virtual void _SystemProcess(double delta)
 	{
+	}
+
+	public IEntity[] GetInGroup(string group)
+	{
+		var output = GetTree().GetNodesInGroup(group).OfType<IEntity>();
+		return output.ToArray();
 	}
 }
