@@ -11,4 +11,5 @@ public static class CompGroups
 	public const string MOBILE = "SysGroupMobile";
 	public const string INTERACTION = "SysGroupInteraction";
 	public const string INPUT = "SysGroupInput";
+	public const string INVENTORY = "SysGroupInventory";
 }

@@ -7,7 +7,7 @@ namespace ToolGame.Interface;
 
 public interface IInteractionSource : IComponent
 {
-	public IMob? Responsible { set; get; }
+	public IEntity? Responsible { set; get; }
 	public IInteractionTarget? CurrentDetected { set; get; }
 	public bool InteractionActive { set; get; }
 }

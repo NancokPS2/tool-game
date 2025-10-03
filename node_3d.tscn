@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dg2kwiyg3dpi8"]
+[gd_scene load_steps=13 format=3 uid="uid://dg2kwiyg3dpi8"]
 
 [ext_resource type="Script" uid="uid://dly8js1fbdkrg" path="res://MachineTest.cs" id="1_jka67"]
 [ext_resource type="Script" uid="uid://dktnoirhq1jkg" path="res://Machinery/Machine/Machines/GeneratorMachine.cs" id="1_noarx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="5_jka67"]
 [ext_resource type="Script" uid="uid://b57fqrho2rw3d" path="res://Machinery/Part/Parts/BatteryMachinePart.cs" id="6_i5arm"]
 [ext_resource type="Script" uid="uid://bk4u6ojppek5g" path="res://Components/Input/InputComponent.cs" id="6_wc5p8"]
+[ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="7_jsk3o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
 
@@ -58,6 +59,10 @@ metadata/_custom_type_script = "uid://b713miu5bjhbi"
 [node name="InputComponent" type="Node" parent="Dummy"]
 script = ExtResource("6_wc5p8")
 metadata/_custom_type_script = "uid://bk4u6ojppek5g"
+
+[node name="Inventory" type="Node" parent="Dummy"]
+script = ExtResource("7_jsk3o")
+metadata/_custom_type_script = "uid://b6ixlf866q3wq"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.467467, 0, 0.884011, 0, 1, 0, -0.884011, 0, 0.467467, 2.59778, 0, 2.37622)

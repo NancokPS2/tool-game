@@ -1,21 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2m4cpfdefl0i"]
+[gd_scene load_steps=8 format=3 uid="uid://c2m4cpfdefl0i"]
 
 [ext_resource type="Script" uid="uid://bqpwjvx5jksa6" path="res://Singleton/GameSystem/SystemManager.cs" id="1_1ymfb"]
-[ext_resource type="Script" uid="uid://c5s0lw2g1ud3y" path="res://Singleton/ECSManagementSystem.cs" id="2_1ymfb"]
+[ext_resource type="Script" uid="uid://blxfnbgosa8na" path="res://Singleton/ECSManager.cs" id="2_1ymfb"]
 [ext_resource type="Script" uid="uid://db6ewsuwaef5p" path="res://Singleton/GameSystem/InteractionSystem.cs" id="3_1ymfb"]
 [ext_resource type="Script" uid="uid://b5xkac5hxmixf" path="res://Singleton/GameSystem/InputSystem.cs" id="4_1ymfb"]
 [ext_resource type="Script" uid="uid://d3fqcsalkpygb" path="res://Singleton/GameSystem/PartSystem.cs" id="5_1ymfb"]
 [ext_resource type="Script" uid="uid://cbojprvd01uoi" path="res://Singleton/GameSystem/PowerSystem.cs" id="6_cmqsb"]
+[ext_resource type="Script" uid="uid://dgv6osh213v0x" path="res://Singleton/GameSystem/InventorySystem.cs" id="7_cmqsb"]
 
 [node name="Systems" type="Node" node_paths=PackedStringArray("SystemTimerNode")]
 script = ExtResource("1_1ymfb")
 SystemTimerNode = NodePath("Timer")
 metadata/_custom_type_script = "uid://bqpwjvx5jksa6"
 
-[node name="ComponentManagementSystem" type="Node" parent="."]
-editor_description = "This node gets initialized on TreeEntered"
+[node name="ECSManager" type="Node" parent="."]
 script = ExtResource("2_1ymfb")
-metadata/_custom_type_script = "uid://c5s0lw2g1ud3y"
+metadata/_custom_type_script = "uid://blxfnbgosa8na"
 
 [node name="InteractionSystem" type="Node" parent="."]
 script = ExtResource("3_1ymfb")
@@ -34,6 +34,10 @@ metadata/_custom_type_script = "uid://d3fqcsalkpygb"
 [node name="PowerSystem" type="Node" parent="."]
 script = ExtResource("6_cmqsb")
 metadata/_custom_type_script = "uid://cbojprvd01uoi"
+
+[node name="InventorySystem" type="Node" parent="."]
+script = ExtResource("7_cmqsb")
+metadata/_custom_type_script = "uid://dgv6osh213v0x"
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0

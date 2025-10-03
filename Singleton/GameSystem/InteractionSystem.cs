@@ -37,8 +37,7 @@ public partial class InteractionSystem : BaseSystem
 				//Anounce that it was interacted with.
 				Interacted?.Invoke(
 					new InteractionContext(
-						source.Responsible ?? throw new Exception(),
-						null,
+						entity.GetEntityId(),
 						source.CurrentDetected
 					)
 				);
@@ -58,7 +57,9 @@ public partial class InteractionSystem : BaseSystem
 
 	public bool IsSourceActive(IEntity entity)
 	{
-		bool inputActive = entity.GetComponent<InputComponent>()?.InputsActive[InputNames.INTERACT] ?? false;
+		bool inputBool = false;
+		entity.GetComponent<InputComponent>()?.InputsActive.TryGetValue(InputNames.INTERACT, out inputBool);
+		bool inputActive = inputBool;
 		return inputActive;
 	}
 }

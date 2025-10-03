@@ -11,14 +11,18 @@ public interface IComponent
 {
 	public string[] GetProcessingGroups();
 
-	public Node GetEntityInstance()
+	public ulong GetComponentId()
+	{
+		return GetEntityInstanceNode().GetEntityId();
+	}
+
+	public Node GetEntityInstanceNode()
 	{
 		if (this is Node node)
 		{
-			if (node.GetParent() is IComponent || node.GetParent() is not IEntity)
-				throw new Exception();
+			if (node.GetParent() is not IEntity)
+				throw new Exception($"The parent at path {node.GetParent().GetPath()} should be an IEntity");
 
-			//Debug.Assert(node.GetParent() is not IComponent && node.GetParent() is IEntity);
 			return node.GetParent();
 		}
 		else
@@ -27,18 +31,18 @@ public interface IComponent
 }
 public static class IComponentExtension
 {
-	public static TComponent? GetComponent<TComponent>(this Node node) where TComponent : IComponent
+	public static TComponent? GetComponent<TComponent>(this IEntity entity) where TComponent : IComponent
 	{
-		return ECSManagementSystem.GetComponent<TComponent>(node.GetInstanceId());
+		return ECSManager.GetComponent<TComponent>((entity as Node ?? throw new Exception($"This entity is not a Node")).GetInstanceId());
 	}
 
 	public static ulong GetEntityId(this Node node)
 	{
-		return node.GetInstanceId();
+		return (node as IEntity ?? throw new Exception()).GetEntityId();
 	}
 
-	public static ulong GetEntityId(this IComponent comp)
+	public static ulong GetComponentId(this Node node)
 	{
-		return comp.GetEntityInstance().GetEntityId();
+		return (node as IComponent ?? throw new Exception()).GetComponentId();
 	}
 }

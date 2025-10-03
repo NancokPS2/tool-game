@@ -9,11 +9,11 @@ using Godot.Collections;
 namespace ToolGame.Singleton;
 
 [GlobalClass]
-public partial class ECSManagementSystem : Node
+public partial class ECSManager : Node
 {
-	public static ECSManagementSystem Instance = null!;
+	public static ECSManager Instance = null!;
 
-	protected System.Collections.Generic.Dictionary<ulong, Node> EntityDict = new();
+	protected System.Collections.Generic.Dictionary<ulong, IEntity> EntityDict = new();
 	protected System.Collections.Generic.Dictionary<ulong, List<IComponent>> ComponentDict = new();
 
 	public override void _EnterTree()
@@ -29,9 +29,14 @@ public partial class ECSManagementSystem : Node
 		return Instance.ComponentDict[entityId].OfType<TComponent>().SingleOrDefault();
 	}
 
-	public static Node? GetEntity(ulong entityId)
+	public static TComponent[] GetComponents<TComponent>(ulong entityId) where TComponent : IComponent
 	{
-		Instance.EntityDict.TryGetValue(entityId, out Node? entity);
+		return Instance.ComponentDict[entityId].OfType<TComponent>().ToArray();
+	}
+
+	public static IEntity? GetEntity(ulong entityId)
+	{
+		Instance.EntityDict.TryGetValue(entityId, out IEntity? entity);
 		return entity;
 	}
 
@@ -47,8 +52,8 @@ public partial class ECSManagementSystem : Node
 		if (node is IComponent comp)
 		{
 			//Get EntityID
-			ulong entityId = comp.GetEntityId();
-			Node entityInstance = comp.GetEntityInstance();
+			ulong entityId = comp.GetComponentId();
+			Node entityInstance = comp.GetEntityInstanceNode();
 
 			//Ensure the instance is the same as stored (the entity needs to exist before the components).
 			if (EntityDict[entityId] != entityInstance)
@@ -69,12 +74,12 @@ public partial class ECSManagementSystem : Node
 		else if (node is IEntity entity)
 		{
 			ulong entityId = node.GetEntityId();
-			if (!ComponentDict.ContainsKey(entityId))
-				throw new Exception();
+			if (ComponentDict.ContainsKey(entityId))
+				throw new Exception("Entity ID was already taken!?");
 			//Debug.Assert(!ComponentDict.ContainsKey(entityId));
 
-			//Initialize the 
-			EntityDict[entityId] = this;
+			//Initialize the dicts for this entity
+			EntityDict[entityId] = entity;
 			ComponentDict[entityId] = new();
 
 			Log.Info($"Entity {node.Name} added with ID {entityId}");
@@ -85,7 +90,7 @@ public partial class ECSManagementSystem : Node
 	{
 		if (node is IComponent comp)
 		{
-			ComponentDict[comp.GetEntityId()].Remove(comp);
+			ComponentDict[comp.GetComponentId()].Remove(comp);
 		}
 	}
 }

@@ -1,3 +1,5 @@
+using ToolGame.Container;
+
 namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
@@ -11,13 +13,14 @@ public partial class PartSystem : MachinerySystem
 
 	public void ParseUseContext(InteractionContext context)
 	{
-		if (
-			context.Hand?.Selected is MachinePart3D part
-			&& context.Target is MachineSlot3D slot
-			)
+		if (context.Target is MachineSlot3D slot)
 		{
-			TryInsertPart(new ChangeMachinePartContext(slot, part, ChangeMachinePartContext.EPartChange.INSERTED));
-			Log.Info($"Inserted {part} into {slot}");
+			MachinePart3D? heldItem = InventorySystem.GetSelectedItem(context.Responsible) as MachinePart3D;
+			if (heldItem is null)
+				return;
+
+			TryInsertPart(new ChangeMachinePartContext(slot, heldItem, ChangeMachinePartContext.EPartChange.INSERTED));
+			Log.Info($"Inserted {heldItem} into {slot}");
 		}
 		Log.Info($"Failed to insert part into {context.Target}");
 	}

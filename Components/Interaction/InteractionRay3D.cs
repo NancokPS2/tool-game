@@ -14,11 +14,11 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 	[Export]
 	protected Node? responsible
 	{
-		set => Responsible = value as IMob;
+		set => Responsible = value as IEntity ?? throw new Exception($"Node at path {value?.GetPath()} is not an IEntity.");
 		get => Responsible as Node;
 	}
 
-	public IMob? Responsible { get; set; }
+	public IEntity? Responsible { get; set; }
 
 	public IInteractionTarget? CurrentDetected { get; set; }
 
