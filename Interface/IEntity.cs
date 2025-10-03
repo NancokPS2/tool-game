@@ -17,4 +17,9 @@ public interface IEntity
 	{
 		return (this as Node ?? throw new Exception()).GetInstanceId();
 	}
+
+	public void AddComponent(IComponent component)
+	{
+		ECSManager.AddComponent(GetEntityId(), component);
+	}
 }

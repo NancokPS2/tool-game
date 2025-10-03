@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://dg2kwiyg3dpi8"]
+[gd_scene load_steps=12 format=3 uid="uid://dg2kwiyg3dpi8"]
 
-[ext_resource type="Script" uid="uid://dly8js1fbdkrg" path="res://MachineTest.cs" id="1_jka67"]
-[ext_resource type="Script" uid="uid://dktnoirhq1jkg" path="res://Machinery/Machine/Machines/GeneratorMachine.cs" id="1_noarx"]
-[ext_resource type="Script" uid="uid://lceg837hqyno" path="res://Mob/Dummy.cs" id="3_a0tk4"]
-[ext_resource type="Script" uid="uid://cgwpxgcxb5e4b" path="res://Machinery/Machine/MachineSlot3D.cs" id="3_jka67"]
+[ext_resource type="Script" uid="uid://dktnoirhq1jkg" path="res://Entity/Machinery/Machine/Machines/GeneratorMachine.cs" id="1_noarx"]
+[ext_resource type="Script" uid="uid://cgwpxgcxb5e4b" path="res://Components/Machinery/MachineSlot.cs" id="2_wc5p8"]
+[ext_resource type="Script" uid="uid://lceg837hqyno" path="res://Entity/Mob/Dummy.cs" id="3_a0tk4"]
 [ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="5_jka67"]
-[ext_resource type="Script" uid="uid://b57fqrho2rw3d" path="res://Machinery/Part/Parts/BatteryMachinePart.cs" id="6_i5arm"]
+[ext_resource type="Script" uid="uid://b57fqrho2rw3d" path="res://Entity/Machinery/Part/Parts/BatteryMachinePart.cs" id="6_i5arm"]
 [ext_resource type="Script" uid="uid://bk4u6ojppek5g" path="res://Components/Input/InputComponent.cs" id="6_wc5p8"]
 [ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="7_jsk3o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r3fl7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
 
@@ -17,32 +18,27 @@ cull_mode = 1
 [sub_resource type="BoxMesh" id="BoxMesh_jka67"]
 material = SubResource("StandardMaterial3D_r3fl7")
 
-[sub_resource type="BoxMesh" id="BoxMesh_r3fl7"]
-
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("Part", "Slot")]
-script = ExtResource("1_jka67")
-Part = NodePath("BatteryMachinePart")
-Slot = NodePath("GeneratorMachine/MachineSlot3D")
+[node name="Node3D" type="Node3D"]
 
 [node name="GeneratorMachine" type="Node3D" parent="." node_paths=PackedStringArray("machineSlots")]
 script = ExtResource("1_noarx")
 machineSlots = [null]
 metadata/_custom_type_script = "uid://dktnoirhq1jkg"
 
-[node name="MachineSlot3D" type="Area3D" parent="GeneratorMachine"]
+[node name="MachineMesh" type="MeshInstance3D" parent="GeneratorMachine"]
+mesh = SubResource("BoxMesh_r3fl7")
+
+[node name="MachineSlotComponent" type="Area3D" parent="GeneratorMachine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02185, 0, 0)
-script = ExtResource("3_jka67")
+script = ExtResource("2_wc5p8")
 categoriesAllowed = Array[int]([0])
 metadata/_custom_type_script = "uid://cgwpxgcxb5e4b"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratorMachine/MachineSlot3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GeneratorMachine/MachineSlotComponent"]
 shape = SubResource("BoxShape3D_r3fl7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GeneratorMachine/MachineSlot3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GeneratorMachine/MachineSlotComponent"]
 mesh = SubResource("BoxMesh_jka67")
-
-[node name="MachineMesh" type="MeshInstance3D" parent="GeneratorMachine"]
-mesh = SubResource("BoxMesh_r3fl7")
 
 [node name="Dummy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.37622)
@@ -60,13 +56,14 @@ metadata/_custom_type_script = "uid://b713miu5bjhbi"
 script = ExtResource("6_wc5p8")
 metadata/_custom_type_script = "uid://bk4u6ojppek5g"
 
-[node name="Inventory" type="Node" parent="Dummy"]
+[node name="Inventory" type="Node" parent="Dummy" node_paths=PackedStringArray("contents")]
 script = ExtResource("7_jsk3o")
+contents = [NodePath("../BatteryMachinePart")]
 metadata/_custom_type_script = "uid://b6ixlf866q3wq"
+
+[node name="BatteryMachinePart" type="Node" parent="Dummy"]
+script = ExtResource("6_i5arm")
+metadata/_custom_type_script = "uid://b57fqrho2rw3d"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.467467, 0, 0.884011, 0, 1, 0, -0.884011, 0, 0.467467, 2.59778, 0, 2.37622)
-
-[node name="BatteryMachinePart" type="Node" parent="."]
-script = ExtResource("6_i5arm")
-metadata/_custom_type_script = "uid://b57fqrho2rw3d"

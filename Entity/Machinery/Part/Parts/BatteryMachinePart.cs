@@ -1,7 +1,7 @@
 namespace ToolGame.Machinery;
 
 [GlobalClass]
-public partial class BatteryMachinePart : MachinePart3D, IPowerContainer
+public partial class BatteryMachinePart : MachinePart, IPowerContainer
 {
 	public bool ProvidesPower { get; set; }
 	public long StoredPower { get => EndlessPower ? StoredPowerMax : storedPower; set => storedPower = value; }

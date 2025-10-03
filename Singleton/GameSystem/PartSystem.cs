@@ -1,3 +1,4 @@
+using System.Linq;
 using ToolGame.Container;
 
 namespace ToolGame.Singleton.GameSystem;
@@ -5,6 +6,9 @@ namespace ToolGame.Singleton.GameSystem;
 [GlobalClass]
 public partial class PartSystem : MachinerySystem
 {
+	public delegate void MachinePartChange(ChangeMachinePartContext context);
+	public event MachinePartChange? MachinePartChanged;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -13,16 +17,38 @@ public partial class PartSystem : MachinerySystem
 
 	public void ParseUseContext(InteractionContext context)
 	{
-		if (context.Target is MachineSlot3D slot)
-		{
-			MachinePart3D? heldItem = InventorySystem.GetSelectedItem(context.Responsible) as MachinePart3D;
-			if (heldItem is null)
-				return;
+		//Check if it was a slot.
+		MachineSlot? slot = context.Target is MachineSlot foundSlot ? foundSlot : null;
 
-			TryInsertPart(new ChangeMachinePartContext(slot, heldItem, ChangeMachinePartContext.EPartChange.INSERTED));
-			Log.Info($"Inserted {heldItem} into {slot}");
+		//Check if there's a part in the entity's hand.
+		MachinePart? heldPart = InventorySystem.GetSelectedItem(context.Responsible) is MachinePart part ? part : null;
+
+		if (slot is not null && heldPart is not null)
+		{
+			InsertPart(context.Target.GetComponentId(), slot, heldPart);
 		}
-		Log.Info($"Failed to insert part into {context.Target}");
+	}
+
+	protected void InsertPart(ulong machineEntityId, MachineSlot slot, MachinePart heldPart)
+	{
+		ChangeMachinePartContext context = new ChangeMachinePartContext(
+				machineEntityId,
+				slot,
+				heldPart,
+				ChangeMachinePartContext.EPartChange.INSERTED);
+
+		//Resolve if it should succeed or not.
+		if (!SlotIsPartCompatible(slot, heldPart))
+		{
+			context.Result = ChangeMachinePartContext.EResult.DOES_NOT_FIT;
+		}
+		else
+		{
+			context.Result = ChangeMachinePartContext.EResult.SUCCESS;
+			slot.Part = heldPart;
+			ECSManager.AddComponent(machineEntityId, heldPart);
+		}
+		MachinePartChanged?.Invoke(context);
 	}
 
 	public void TryInsertPart(ChangeMachinePartContext context)
@@ -33,10 +59,22 @@ public partial class PartSystem : MachinerySystem
 		}
 	}
 
-	protected bool SlotIsPartCompatible(MachineSlot3D slot, MachinePart3D part)
+	protected bool SlotIsPartCompatible(MachineSlot slot, MachinePart part)
 	{
 		bool allowedCategory = slot.CategoriesAllowed.Contains(part.Category);
 
 		return allowedCategory;
+	}
+
+	protected void OnMachinePartChanged(ChangeMachinePartContext context)
+	{
+		string logMsg = context.Result switch
+		{
+			ChangeMachinePartContext.EResult.SUCCESS => $"Inserted {context.Part} into {context.Slot}",
+			ChangeMachinePartContext.EResult.DOES_NOT_FIT => $"{context.Part} does not fit into {context.Slot}",
+			ChangeMachinePartContext.EResult.UNDEFINED => $"Failed to insert {context.Part} into {context.Slot} for some reason",
+			_ => throw new Exception(),
+		};
+		Log.Info(logMsg);
 	}
 }

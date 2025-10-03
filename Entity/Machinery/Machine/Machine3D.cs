@@ -7,21 +7,21 @@ namespace ToolGame.Machinery;
 
 public abstract partial class Machine3D : Node3D, IEntity
 {
-	protected List<MachineSlot3D> MachineSlots = new();
+	protected List<MachineSlot> MachineSlots = new();
 	[Export]
-	protected Godot.Collections.Array<MachineSlot3D> machineSlots
+	protected Godot.Collections.Array<MachineSlot> machineSlots
 	{
 		set => MachineSlots = new(value);
 		get => new(MachineSlots);
 	}
 
 	#region Part Management
-    public virtual MachinePart3D? GetPart<TPart>() where TPart : MachinePart3D
+    public virtual MachinePart? GetPart<TPart>() where TPart : MachinePart
 	{
 		return GetParts().OfType<TPart>().Single();
 	}
 
-    public virtual List<MachinePart3D> GetParts()
+    public virtual List<MachinePart> GetParts()
     {
         return (from slot in MachineSlots select slot.Part).ToList();
     }
@@ -31,7 +31,7 @@ public abstract partial class Machine3D : Node3D, IEntity
         return (from slot in MachineSlots select slot.Part).OfType<TMachinePart>().ToList();
     }
 
-    public virtual bool HasPart<TPart>() where TPart : MachinePart3D
+    public virtual bool HasPart<TPart>() where TPart : MachinePart
     {
         return GetParts().OfType<TPart>().Count() > 0;
     }

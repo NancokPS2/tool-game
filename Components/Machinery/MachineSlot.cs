@@ -5,10 +5,15 @@ using ToolGame.Interaction;
 namespace ToolGame.Machinery;
 
 [GlobalClass]
-public partial class MachineSlot3D : InteractionArea3D, IInteractionTarget
+public partial class MachineSlot : InteractionArea3D, IInteractionTarget
 {
+	public MachinePart? Part;
 	[Export]
-	public MachinePart3D? Part;
+	protected Node? part
+	{
+		set => Part = value is MachinePart machPart ? machPart : null;
+		get => Part as Node;
+	}
 
 	public List<EPartCategory> CategoriesAllowed = new();
 	[Export]

@@ -20,6 +20,7 @@ public partial class Inventory : Node, IComponent
 	}
 	public List<IItem> Contents = new();
 
+	[Export]
 	public int Selected
 	{
 		get

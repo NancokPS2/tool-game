@@ -31,7 +31,6 @@ public partial class InteractionRay3D : RayCast3D, IInteractionSource
 	{
 		base._EnterTree();
 		CollideWithAreas = true;
-
 	}
 
 	public string[] GetProcessingGroups() => [CompGroups.INTERACTION];

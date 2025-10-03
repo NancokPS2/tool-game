@@ -1,15 +1,20 @@
+using System.Reflection.PortableExecutable;
+
 namespace ToolGame.Context;
 
 public class ChangeMachinePartContext
 {
-	public enum EPartChange {INSERTED, REMOVED}
-    public Machine3D? Machine;
-    public MachineSlot3D Slot;
-    public MachinePart3D Part;
+	public enum EPartChange { INSERTED, REMOVED }
+	public enum EResult { UNDEFINED, SUCCESS, DOES_NOT_FIT }
+	public ulong MachineEntityId;
+	public MachineSlot Slot;
+	public MachinePart Part;
 	public EPartChange Change;
+	public EResult Result;
 
-	public ChangeMachinePartContext(MachineSlot3D slot, MachinePart3D part, EPartChange change)
+	public ChangeMachinePartContext(ulong machineEntityId, MachineSlot slot, MachinePart part, EPartChange change)
 	{
+		MachineEntityId = machineEntityId;
 		Slot = slot;
 		Part = part;
 		Change = change;
