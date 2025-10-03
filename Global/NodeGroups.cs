@@ -12,4 +12,6 @@ public static class CompGroups
 	public const string INTERACTION = "SysGroupInteraction";
 	public const string INPUT = "SysGroupInput";
 	public const string INVENTORY = "SysGroupInventory";
+	public const string MACHINERY = "SysGroupMachinery";
+	public const string POWER_METER = "SysGroupMeter";
 }

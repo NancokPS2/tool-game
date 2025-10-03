@@ -9,10 +9,10 @@ public partial class MachineSlot : InteractionArea3D, IInteractionTarget
 {
 	public MachinePart? Part;
 	[Export]
-	protected Node? part
+	protected MachinePart? part
 	{
 		set => Part = value is MachinePart machPart ? machPart : null;
-		get => Part as Node;
+		get => Part;
 	}
 
 	public List<EPartCategory> CategoriesAllowed = new();

@@ -85,7 +85,7 @@ public partial class ECSManager : Node
 		//Add the component to the list.
 		ComponentDict[entityId].Add(comp);
 
-		Log.Info($"Component added {entityNode.Name} to entity {entityNode.Name} (ID: {entityId})");
+		Log.Info($"Component {compNode.Name} added to entity {entityNode.Name} (ID: {entityId})");
 	}
 
 	protected NodeManager[] GetAllNodeManagers()

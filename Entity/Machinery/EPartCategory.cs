@@ -2,6 +2,7 @@ namespace ToolGame.Machinery;
 
 public enum EPartCategory
 {
-    BATTERY,
-    SCREEN,
+	BATTERY,
+	SCREEN,
+	OTHER,
 }

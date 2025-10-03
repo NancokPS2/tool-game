@@ -4,7 +4,7 @@ using ToolGame.Container;
 namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
-public partial class PartSystem : MachinerySystem
+public partial class PartSystem : BaseSystem
 {
 	public delegate void MachinePartChange(ChangeMachinePartContext context);
 	public event MachinePartChange? MachinePartChanged;
@@ -44,9 +44,10 @@ public partial class PartSystem : MachinerySystem
 		}
 		else
 		{
-			context.Result = ChangeMachinePartContext.EResult.SUCCESS;
-			slot.Part = heldPart;
 			ECSManager.AddComponent(machineEntityId, heldPart);
+			slot.Part = heldPart;
+			heldPart.Position = slot.Position;
+			context.Result = ChangeMachinePartContext.EResult.SUCCESS;
 		}
 		MachinePartChanged?.Invoke(context);
 	}

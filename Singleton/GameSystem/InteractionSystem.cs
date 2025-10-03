@@ -25,9 +25,10 @@ public partial class InteractionSystem : BaseSystem
 		foreach (IEntity entity in GetInGroup(CompGroups.INTERACTION))
 		{
 			//Process target cooldowns.
-			var target = entity.GetComponent<IInteractionTarget>();
-			if (target is not null)
-				ProcessTargetCooldown(target, delta);
+			foreach (var target in entity.GetComponents<IInteractionTarget>())
+			{
+				ProcessTargetCooldown(target, delta);	
+			}
 
 			//Get the source component.
 			IInteractionSource? source = entity.GetComponent<IInteractionSource>();
@@ -43,7 +44,7 @@ public partial class InteractionSystem : BaseSystem
 			if (source.CurrentDetected is not null && source.InteractionActive && IsTargetCooldownReady(source.CurrentDetected))
 			{
 				source.CurrentDetected.InteractionCooldownCurrent = 0;
-				
+
 				//Anounce that it was interacted with.
 				Interacted?.Invoke(
 					new InteractionContext(

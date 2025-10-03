@@ -4,13 +4,13 @@ namespace ToolGame.Context;
 
 public class ChangePowerMachineContext
 {
-    public Machine3D Machine;
-    public List<IPowerContainer> PowerContainers;
-    public long Amount;
+    public ulong EntityId;
+    public IPowerContainer[] PowerContainers;
+    public double Amount;
 
-    public ChangePowerMachineContext(Machine3D machine, List<IPowerContainer> powerContainers, long amount)
+    public ChangePowerMachineContext(ulong entityId, IPowerContainer[] powerContainers, double amount)
     {
-        Machine = machine;
+		EntityId = entityId;
         PowerContainers = powerContainers;
         Amount = amount;
     }

@@ -13,6 +13,11 @@ public interface IEntity
 		return ECSManager.GetComponent<TComponent>(GetEntityId());
 	}
 
+	public TComponent[] GetComponents<TComponent>() where TComponent : IComponent
+	{
+		return ECSManager.GetComponents<TComponent>(GetEntityId());
+	}
+
 	public ulong GetEntityId()
 	{
 		return (this as Node ?? throw new Exception()).GetInstanceId();
