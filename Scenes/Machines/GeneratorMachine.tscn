@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwtk0fqt6qmdk"]
+
+[ext_resource type="Script" uid="uid://dktnoirhq1jkg" path="res://Entity/Machinery/Machine/Machines/GeneratorMachine.cs" id="1_x3b2v"]
+[ext_resource type="Script" uid="uid://cgwpxgcxb5e4b" path="res://Components/Machinery/MachineSlot.cs" id="2_rsjn5"]
+[ext_resource type="Script" uid="uid://b57fqrho2rw3d" path="res://Components/Machinery/BatteryMachinePart.cs" id="3_150om"]
+[ext_resource type="Script" uid="uid://b7ieg28nfvsti" path="res://Components/Machinery/PowerMeterMachinePart.cs" id="4_7brl1"]
+[ext_resource type="PackedScene" uid="uid://bs1urrxu8xgjs" path="res://Scenes/MachinePart/PowerMeter.tscn" id="5_47uwd"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r3fl7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3fl7"]
+cull_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_jka67"]
+material = SubResource("StandardMaterial3D_r3fl7")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4arys"]
+
+[node name="GeneratorMachine" type="Node3D"]
+script = ExtResource("1_x3b2v")
+metadata/_custom_type_script = "uid://dktnoirhq1jkg"
+
+[node name="MachineMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_r3fl7")
+
+[node name="BatterySlot" type="Area3D" parent="." node_paths=PackedStringArray("part")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02185, 0, 0)
+script = ExtResource("2_rsjn5")
+part = NodePath("../BatteryMachinePart")
+categoriesAllowed = Array[int]([0])
+metadata/_custom_type_script = "uid://cgwpxgcxb5e4b"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BatterySlot"]
+shape = SubResource("BoxShape3D_r3fl7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BatterySlot"]
+mesh = SubResource("BoxMesh_jka67")
+
+[node name="BatteryMachinePart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.37622)
+script = ExtResource("3_150om")
+metadata/_custom_type_script = "uid://b57fqrho2rw3d"
+
+[node name="OtherSlot" type="Area3D" parent="." node_paths=PackedStringArray("part")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0420012, 0, 0.598769)
+script = ExtResource("2_rsjn5")
+part = NodePath("../PowerMeterMachinePart")
+categoriesAllowed = Array[int]([2])
+metadata/_custom_type_script = "uid://cgwpxgcxb5e4b"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherSlot"]
+shape = SubResource("BoxShape3D_r3fl7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OtherSlot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0064702)
+mesh = SubResource("QuadMesh_4arys")
+
+[node name="PowerMeterMachinePart" type="Node3D" parent="." node_paths=PackedStringArray("PowerMeter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0420012, 0, 0.598769)
+script = ExtResource("4_7brl1")
+PowerMeter = NodePath("PowerMeter")
+Category = 2
+metadata/_custom_type_script = "uid://b7ieg28nfvsti"
+
+[node name="PowerMeter" parent="PowerMeterMachinePart" instance=ExtResource("5_47uwd")]
+MaxSize = Vector2(0.5, 1)

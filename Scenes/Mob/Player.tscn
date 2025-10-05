@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://duepoq4l0xnji"]
+
+[ext_resource type="Script" uid="uid://vfxbmimqmbml" path="res://Scenes/Mob/Player.cs" id="1_fummv"]
+[ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="2_ovtmv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tas7a"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tas7a"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_fummv")
+metadata/_custom_type_script = "uid://vfxbmimqmbml"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_tas7a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_tas7a")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03977, 0)
+current = true
+
+[node name="InteractionRay3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+target_position = Vector3(0, 0, -8)
+script = ExtResource("2_ovtmv")
+metadata/_custom_type_script = "uid://b713miu5bjhbi"

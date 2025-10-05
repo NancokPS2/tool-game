@@ -14,4 +14,5 @@ public static class CompGroups
 	public const string INVENTORY = "SysGroupInventory";
 	public const string MACHINERY = "SysGroupMachinery";
 	public const string POWER_METER = "SysGroupMeter";
+	public const string PHYSICS = "SysGroupPhysics";
 }
