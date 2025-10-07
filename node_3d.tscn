@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dg2kwiyg3dpi8"]
+[gd_scene load_steps=11 format=3 uid="uid://dg2kwiyg3dpi8"]
 
 [ext_resource type="PackedScene" uid="uid://cwtk0fqt6qmdk" path="res://Scenes/Machines/GeneratorMachine.tscn" id="1_i5arm"]
 [ext_resource type="Script" uid="uid://lceg837hqyno" path="res://Entity/Mob/Dummy.cs" id="3_a0tk4"]
 [ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="5_jka67"]
 [ext_resource type="Script" uid="uid://bk4u6ojppek5g" path="res://Components/Input/InputComponent.cs" id="6_wc5p8"]
 [ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="7_jsk3o"]
+[ext_resource type="PackedScene" uid="uid://cpv60fw3wc8ka" path="res://Scenes/Items/BallItem.tscn" id="7_wc5p8"]
 [ext_resource type="PackedScene" uid="uid://duepoq4l0xnji" path="res://Scenes/Mob/Player.tscn" id="10_6iypd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5arm"]
@@ -39,7 +40,7 @@ metadata/_custom_type_script = "uid://bk4u6ojppek5g"
 
 [node name="Inventory" type="Node" parent="Dummy" node_paths=PackedStringArray("contents")]
 script = ExtResource("7_jsk3o")
-contents = [null]
+contents = {}
 metadata/_custom_type_script = "uid://b6ixlf866q3wq"
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -60,3 +61,6 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_i5arm")
+
+[node name="BallItem" parent="." instance=ExtResource("7_wc5p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.462625, 0, 2.21743)

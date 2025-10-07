@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://duepoq4l0xnji"]
+[gd_scene load_steps=7 format=3 uid="uid://duepoq4l0xnji"]
 
 [ext_resource type="Script" uid="uid://vfxbmimqmbml" path="res://Scenes/Mob/Player.cs" id="1_fummv"]
-[ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="2_ovtmv"]
+[ext_resource type="Script" uid="uid://cslcwxau0x0g4" path="res://Scenes/Items/ItemPickupRay3D.cs" id="2_3vaop"]
+[ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="3_hfb8m"]
+[ext_resource type="PackedScene" uid="uid://b7hqqkuhd3w8w" path="res://UI/InventoryUI.tscn" id="4_3vaop"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tas7a"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tas7a"]
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("RotatedNodes")]
 script = ExtResource("1_fummv")
+RotatedNodes = [NodePath("Camera3D"), NodePath("ItemPickupRay3D")]
+RotationSpeed = 0.1
 metadata/_custom_type_script = "uid://vfxbmimqmbml"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -17,14 +21,26 @@ shape = SubResource("CapsuleShape3D_tas7a")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_tas7a")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03977, 0)
 current = true
 
-[node name="InteractionRay3D" type="RayCast3D" parent="."]
+[node name="ItemPickupRay3D" type="RayCast3D" parent="." node_paths=PackedStringArray("InventoryComponent")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-target_position = Vector3(0, 0, -8)
-script = ExtResource("2_ovtmv")
-metadata/_custom_type_script = "uid://b713miu5bjhbi"
+target_position = Vector3(0, 0, -10)
+collide_with_areas = true
+script = ExtResource("2_3vaop")
+InventoryComponent = NodePath("../Inventory")
+metadata/_custom_type_script = "uid://cslcwxau0x0g4"
+
+[node name="Inventory" type="Node" parent="." node_paths=PackedStringArray("contents")]
+script = ExtResource("3_hfb8m")
+contents = {}
+metadata/_custom_type_script = "uid://b6ixlf866q3wq"
+
+[node name="Control" parent="." node_paths=PackedStringArray("InventoryComponent", "PickupRay") instance=ExtResource("4_3vaop")]
+InventoryComponent = NodePath("../Inventory")
+PickupRay = NodePath("../ItemPickupRay3D")

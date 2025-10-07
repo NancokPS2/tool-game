@@ -11,6 +11,17 @@ public partial class MachinePart : Node3D, IComponent, IItem
 	public PackedScene? ItemScene { get; set; }
 	[Export]
 	public Texture2D? Icon { get; set; }
+	public string ItemName { get; set; }
 
 	public virtual string[] GetProcessingGroups() => [CompGroups.MACHINERY];
+
+	public IItem Pickup()
+	{
+		throw new NotImplementedException();
+	}
+
+	public void Place(Vector3 where)
+	{
+		throw new NotImplementedException();
+	}
 }

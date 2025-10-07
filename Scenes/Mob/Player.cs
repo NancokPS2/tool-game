@@ -13,17 +13,26 @@ public partial class Player : CharacterBody3D, IEntity
 	public float SpeedMax = SPEED_MAX_DEFAULT;
 
 	[Export]
-	public Godot.Collections.Array<Vector3> RotatedNodes = new();
+	public Godot.Collections.Array<Node3D> RotatedNodes = new();
 
+	[Export]
+	public float RotationSpeed = 0.5f;
 
-	public Vector3 Rotation;
 	public Vector3 MovementInput;
+	public Vector2 RotationInput;
 
+	public Vector3 RotationToApply;
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		RotatedNodes.For
+		RotationToApply = new Vector3(-(RotationInput.Y * (float)(delta * RotationSpeed)), -(RotationInput.X * (float)(delta * RotationSpeed)), 0);
+		foreach (var item in RotatedNodes)
+		{
+			item.Rotation += RotationToApply;
+			item.Orthonormalize();
+		}
+		RotationInput = Vector2.Zero;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -37,6 +46,7 @@ public partial class Player : CharacterBody3D, IEntity
 		//Apply input to velocity
 		Velocity += MovementInput * (float)(Acceleration * delta);
 
+
 		//Cap speed
 		Velocity = Velocity.LimitLength(SpeedMax);
 
@@ -48,4 +58,14 @@ public partial class Player : CharacterBody3D, IEntity
 
 		MoveAndSlide();
 	}
+
+	public override void _Input(InputEvent @event)
+	{
+		base._Input(@event);
+		if (@event is InputEventMouseMotion motion)
+		{
+			RotationInput += motion.Relative;
+		}
+	}
+
 }

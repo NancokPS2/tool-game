@@ -9,16 +9,30 @@ namespace ToolGame.Container;
 public partial class Inventory : Node, IComponent
 {
 	[Export]
-	protected Godot.Collections.Array<Node> contents
+	protected Godot.Collections.Dictionary<int, Node?> contents
 	{
 		set
 		{
-			Contents = value.OfType<IItem>().ToList();
-			Contents.ForEach(x => (x as Node)?.GetParent().RemoveChild(x as Node));
+			Contents = value.ToDictionary(
+				pair => pair.Key,
+				pair => pair.Value as IItem ?? null
+			);
+			foreach (var item in Contents.Values)
+			{
+				(item as Node)?.GetParent().RemoveChild(item as Node);
+			}
 		}
-		get => [.. Contents.OfType<Node>()];
+
+		get
+		{
+			return new(Contents.ToDictionary(
+			pair => pair.Key,
+			pair => pair.Value as Node
+				)
+			);
+		}
 	}
-	public List<IItem> Contents = new();
+	public Dictionary<int, IItem?> Contents = new();
 
 	[Export]
 	public int Selected
@@ -36,4 +50,7 @@ public partial class Inventory : Node, IComponent
 	private int selected;
 
 	public string[] GetProcessingGroups() => [CompGroups.INVENTORY];
+
+	public int GetEmptySlot()
+		=> Contents.FirstOrDefault(x => x.Value == null).Key;
 }

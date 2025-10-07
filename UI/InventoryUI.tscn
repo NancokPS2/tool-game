@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7hqqkuhd3w8w"]
+
+[ext_resource type="Script" uid="uid://bmiqjvgk5rjwn" path="res://UI/InventoryUI.cs" id="1_xufhh"]
+
+[sub_resource type="Gradient" id="Gradient_g743x"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nqqu2"]
+gradient = SubResource("Gradient_g743x")
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_itwfp"]
+gradient = SubResource("Gradient_g743x")
+
+[node name="Control" type="Control" node_paths=PackedStringArray("InventoryComponent", "ItemName", "InventorySlotDisplay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_xufhh")
+TextureEmpty = SubResource("GradientTexture2D_nqqu2")
+InventoryComponent = NodePath("")
+ItemName = NodePath("ItemName")
+InventorySlotDisplay = [NodePath("HBoxContainer/TextureRect"), NodePath("HBoxContainer/TextureRect2"), NodePath("HBoxContainer/TextureRect3"), NodePath("HBoxContainer/TextureRect4"), NodePath("HBoxContainer/TextureRect5"), NodePath("HBoxContainer/TextureRect6"), NodePath("HBoxContainer/TextureRect7"), NodePath("HBoxContainer/TextureRect8")]
+metadata/_custom_type_script = "uid://bmiqjvgk5rjwn"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("GradientTexture2D_itwfp")
+expand_mode = 4
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect5" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect6" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect7" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="TextureRect8" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 4
+
+[node name="ItemName" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
