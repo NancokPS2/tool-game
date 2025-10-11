@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Arch.Core;
+using ToolGame.ECS;
 
 namespace ToolGame.Singleton.GameSystem;
 
@@ -28,6 +30,15 @@ public abstract partial class BaseSystem : Node
 	protected EProcessMode syncToProcess;
 	private bool SystemProcessEnabled;
 
+	#region Arch
+	public abstract QueryDescription QueryDefault { set; get; }
+
+	public static Arch.Core.World GetWorld() => ECSManager.World;
+
+	public abstract void ProcessEntity(Entity entity, double delta);
+
+	#endregion
+
 	public void SystemProcess(double delta)
 	{
 		if (!SystemProcessEnabled) return;
@@ -48,11 +59,11 @@ public abstract partial class BaseSystem : Node
 
 	public virtual void _SystemProcess(double delta)
 	{
+			GetWorld().Query(QueryDefault, (Entity entity) =>
+			{
+				ProcessEntity(entity, delta);
+			}
+		);
 	}
 
-	public IEntity[] GetInGroup(string group)
-	{
-		var output = GetTree().GetNodesInGroup(group).OfType<IEntity>();
-		return output.ToArray();
-	}
 }

@@ -7,13 +7,13 @@ namespace ToolGame.Context;
 
 public class PowerMetricsContext
 {
-	public ulong EntityId;
+	public Arch.Core.Entity Entity;
 	public double PowerCurrent;
 	public double PowerMax;
 
-	public PowerMetricsContext(ulong entityId, double powerCurrent, double powerMax)
+	public PowerMetricsContext(Arch.Core.Entity entity, double powerCurrent, double powerMax)
 	{
-		EntityId = entityId;
+		Entity = entity;
 		PowerCurrent = powerCurrent;
 		PowerMax = powerMax;
 	}

@@ -1,24 +1,23 @@
+using Arch.Core;
+using Arch.Core.Extensions;
+using ToolGame.ECS;
+
 namespace ToolGame.Singleton.GameSystem;
 
 [GlobalClass]
 public partial class PowerSystem : BaseSystem
 {
+	public override QueryDescription QueryDefault { get; set; } = new QueryDescription().WithAny<IPowerConsumer, IPowerGenerator, IPowerConsumer>();
+
+
 	public override void _SystemProcess(double delta)
 	{
 		base._SystemProcess(delta);
 
-
-
-
-		foreach (IEntity entity in GetInGroup(CompGroups.MACHINERY))
 		{
-			IPowerGenerator[] generators = entity.GetComponents<IPowerGenerator>(); ;
-			IPowerContainer[] containers = entity.GetComponents<IPowerContainer>();
-			IPowerConsumer[] consumers = entity.GetComponents<IPowerConsumer>();
-
 			//Get power generated.
 			double powerGenerated = 0;
-			foreach (IPowerGenerator generator in generators)
+			foreach (IPowerGenerator generator in chunk.Get())
 			{
 				powerGenerated += generator.PowerProvided * delta;
 			}
@@ -59,21 +58,20 @@ public partial class PowerSystem : BaseSystem
 		}
 	}
 
-	public static PowerMetricsContext GetPowerMetrics(ulong entityId)
+	public static PowerMetricsContext GetPowerMetrics(Entity entity)
 	{
-		double stored = 0;
-		double max = 0;
-		foreach (var item in ECSManager.GetComponents<IPowerContainer>(entityId))
-		{
-			stored += item.PowerStored;
-			max += item.PowerStoredMax;
-		}
+		double stored = entity.Get<IPowerContainer>().PowerStored;
+		double max = entity.Get<IPowerContainer>().PowerStoredMax;
 
 		return new PowerMetricsContext(
-			entityId,
+			entity,
 			stored,
 			max
 		);
 	}
 
+	public override void ProcessEntity(Entity entity, double delta)
+	{
+		throw new NotImplementedException();
+	}
 }
