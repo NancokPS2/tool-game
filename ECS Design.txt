@@ -1,0 +1,2 @@
+- Give each system a Dictionary<long, IConcreteComponent> per type of component it will handle
+- Give BaseSystem a ReceiveComponent<IComponent component) function
