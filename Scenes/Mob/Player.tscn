@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://vfxbmimqmbml" path="res://Scenes/Mob/Player.cs" id="1_fummv"]
 [ext_resource type="Script" uid="uid://cslcwxau0x0g4" path="res://Scenes/Items/ItemPickupRay3D.cs" id="2_3vaop"]
-[ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="3_hfb8m"]
+[ext_resource type="Script" path="res://Components/Container/Inventory.cs" id="3_hfb8m"]
 [ext_resource type="PackedScene" uid="uid://b7hqqkuhd3w8w" path="res://UI/InventoryUI.tscn" id="4_3vaop"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tas7a"]
@@ -39,6 +39,7 @@ metadata/_custom_type_script = "uid://cslcwxau0x0g4"
 [node name="Inventory" type="Node" parent="." node_paths=PackedStringArray("contents")]
 script = ExtResource("3_hfb8m")
 contents = {}
+Selected = null
 metadata/_custom_type_script = "uid://b6ixlf866q3wq"
 
 [node name="Control" parent="." node_paths=PackedStringArray("InventoryComponent", "PickupRay") instance=ExtResource("4_3vaop")]

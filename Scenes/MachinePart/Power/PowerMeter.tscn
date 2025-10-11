@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bs1urrxu8xgjs"]
 
-[ext_resource type="Script" uid="uid://0y7ww1axr4on" path="res://Scenes/MachinePart/PowerMeter3D.cs" id="1_5m8n6"]
+[ext_resource type="Script" uid="uid://0y7ww1axr4on" path="res://Scenes/MachinePart/Power/PowerMeter3D.cs" id="1_5m8n6"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_b7flv"]
 size = Vector2(0.5, 1)

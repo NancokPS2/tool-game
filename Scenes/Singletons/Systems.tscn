@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://c2m4cpfdefl0i"]
 
 [ext_resource type="Script" uid="uid://bqpwjvx5jksa6" path="res://Singleton/GameSystem/SystemManager.cs" id="1_1ymfb"]
-[ext_resource type="Script" uid="uid://blxfnbgosa8na" path="res://Singleton/ECSManager.cs" id="2_1ymfb"]
+[ext_resource type="Script" path="res://Singleton/ECS/ECSManager.cs" id="2_1ymfb"]
 [ext_resource type="Script" uid="uid://db6ewsuwaef5p" path="res://Singleton/GameSystem/InteractionSystem.cs" id="3_1ymfb"]
 [ext_resource type="Script" uid="uid://b5xkac5hxmixf" path="res://Singleton/GameSystem/InputSystem.cs" id="4_1ymfb"]
 [ext_resource type="Script" uid="uid://d3fqcsalkpygb" path="res://Singleton/GameSystem/PartSystem.cs" id="5_1ymfb"]
-[ext_resource type="Script" uid="uid://cbojprvd01uoi" path="res://Singleton/GameSystem/PowerSystem.cs" id="6_cmqsb"]
+[ext_resource type="Script" path="res://Singleton/GameSystem/PowerSystem.cs" id="6_cmqsb"]
 [ext_resource type="Script" uid="uid://dgv6osh213v0x" path="res://Singleton/GameSystem/InventorySystem.cs" id="7_cmqsb"]
-[ext_resource type="Script" uid="uid://b85xj8j71njbx" path="res://Singleton/GameSystem/PowerMeterSystem.cs" id="8_nmjyn"]
+[ext_resource type="Script" path="res://Singleton/GameSystem/PowerMeterSystem.cs" id="8_nmjyn"]
 
 [node name="Systems" type="Node" node_paths=PackedStringArray("SystemTimerNode")]
 script = ExtResource("1_1ymfb")
@@ -34,6 +34,7 @@ metadata/_custom_type_script = "uid://d3fqcsalkpygb"
 
 [node name="PowerSystem" type="Node" parent="."]
 script = ExtResource("6_cmqsb")
+SyncToProcess = null
 metadata/_custom_type_script = "uid://cbojprvd01uoi"
 
 [node name="InventorySystem" type="Node" parent="."]
@@ -42,6 +43,7 @@ metadata/_custom_type_script = "uid://dgv6osh213v0x"
 
 [node name="PowerMeterSystem" type="Node" parent="."]
 script = ExtResource("8_nmjyn")
+SyncToProcess = null
 metadata/_custom_type_script = "uid://b85xj8j71njbx"
 
 [node name="Timer" type="Timer" parent="."]

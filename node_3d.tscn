@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://dg2kwiyg3dpi8"]
 
 [ext_resource type="PackedScene" uid="uid://cwtk0fqt6qmdk" path="res://Scenes/Machines/GeneratorMachine.tscn" id="1_i5arm"]
-[ext_resource type="Script" uid="uid://lceg837hqyno" path="res://Entity/Mob/Dummy.cs" id="3_a0tk4"]
-[ext_resource type="Script" uid="uid://b713miu5bjhbi" path="res://Components/Interaction/InteractionRay3D.cs" id="5_jka67"]
-[ext_resource type="Script" uid="uid://bk4u6ojppek5g" path="res://Components/Input/InputComponent.cs" id="6_wc5p8"]
-[ext_resource type="Script" uid="uid://b6ixlf866q3wq" path="res://Components/Container/Inventory.cs" id="7_jsk3o"]
+[ext_resource type="Script" path="res://Entity/Mob/Dummy.cs" id="3_a0tk4"]
+[ext_resource type="Script" path="res://Components/Interaction/InteractionRay3D.cs" id="5_jka67"]
+[ext_resource type="Script" path="res://Components/Input/InputComponent.cs" id="6_wc5p8"]
+[ext_resource type="Script" path="res://Components/Container/Inventory.cs" id="7_jsk3o"]
 [ext_resource type="PackedScene" uid="uid://cpv60fw3wc8ka" path="res://Scenes/Items/BallItem.tscn" id="7_wc5p8"]
 [ext_resource type="PackedScene" uid="uid://duepoq4l0xnji" path="res://Scenes/Mob/Player.tscn" id="10_6iypd"]
 
@@ -31,6 +31,7 @@ metadata/_custom_type_script = "uid://lceg837hqyno"
 transform = Transform3D(-0.898327, 0, 0.439328, 0, 1, 0, -0.439328, 0, -0.898327, 0, 0, 0)
 target_position = Vector3(0, 0, 6)
 script = ExtResource("5_jka67")
+UseGlobalInput = null
 responsible = NodePath("..")
 metadata/_custom_type_script = "uid://b713miu5bjhbi"
 
@@ -38,9 +39,9 @@ metadata/_custom_type_script = "uid://b713miu5bjhbi"
 script = ExtResource("6_wc5p8")
 metadata/_custom_type_script = "uid://bk4u6ojppek5g"
 
-[node name="Inventory" type="Node" parent="Dummy" node_paths=PackedStringArray("contents")]
+[node name="Inventory" type="Node" parent="Dummy"]
 script = ExtResource("7_jsk3o")
-contents = {}
+Selected = null
 metadata/_custom_type_script = "uid://b6ixlf866q3wq"
 
 [node name="Camera3D" type="Camera3D" parent="."]

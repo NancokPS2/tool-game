@@ -1,7 +1,5 @@
-using Godot;
-using System;
 
-[GlobalClass, Tool]
+[GlobalClass]
 public partial class PowerMeter3D : Node3D
 {
 	public static readonly Vector2 DEFAULT_SIZE = new(0.5f, 1.5f);
@@ -12,7 +10,7 @@ public partial class PowerMeter3D : Node3D
 		set
 		{
 			powerIndicatorMeshNode = value;
-			Update();
+			UpdateMesh();
 		}
 		get => powerIndicatorMeshNode;
 	}
@@ -24,7 +22,7 @@ public partial class PowerMeter3D : Node3D
 		set
 		{
 			powerIndicatorMesh = value;
-			Update();
+			UpdateMesh();
 		}
 		get => powerIndicatorMesh;
 	}
@@ -36,7 +34,7 @@ public partial class PowerMeter3D : Node3D
 		set
 		{
 			this.value = value;
-			Update();
+			UpdateMesh();
 		}
 		get => value;
 	}
@@ -48,13 +46,16 @@ public partial class PowerMeter3D : Node3D
 		set
 		{
 			maxSize = value;
-			Update();
+			UpdateMesh();
 		}
 		get => maxSize;
 	}
 	protected Vector2 maxSize = DEFAULT_SIZE;
 
-	protected void Update()
+	[Export]
+	public Godot.Collections.Array<PowerContainer3D> PowerContainers = new();
+
+	protected void UpdateMesh()
 	{
 		if (PowerIndicatorMeshNode is null)
 			return;
@@ -63,4 +64,18 @@ public partial class PowerMeter3D : Node3D
 		PowerIndicatorMesh.Size = new(MaxSize.X, MaxSize.Y * value);
 		PowerIndicatorMeshNode.Mesh = PowerIndicatorMesh;
 	}
+
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+		double stored = 0;
+		double max = 0;
+		foreach (var item in PowerContainers)
+		{
+			stored += item.Stored;
+			max += item.Max;
+		}
+		Value = (float)(stored / max);
+	}
+
 }

@@ -11,7 +11,7 @@ public partial class MachinePart : Node3D, IComponent, IItem
 	public PackedScene? ItemScene { get; set; }
 	[Export]
 	public Texture2D? Icon { get; set; }
-	public string ItemName { get; set; }
+	public string ItemName { get; set; } = "UNNAMED";
 
 	public virtual string[] GetProcessingGroups() => [CompGroups.MACHINERY];
 
