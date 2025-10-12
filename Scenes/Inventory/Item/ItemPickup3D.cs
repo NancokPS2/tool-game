@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using ToolGame;
 
 [GlobalClass]
-public partial class ItemPickupRay3D : RayCast3D, IInputReceiver
+public partial class ItemPickup3D : Node3D, IInputReceiver
 {
 
 	/* 
@@ -14,6 +13,9 @@ public partial class ItemPickupRay3D : RayCast3D, IInputReceiver
 		get => Reader as InputReader ?? null;
 	} 
 	*/
+
+	[Export]
+	public RayCast3D PickupRaycast = null!;
 
 	public string[] TriggeringActions { get; set; } = [InputManager.INPUT_INTERACT];
 	[Export]
@@ -29,23 +31,32 @@ public partial class ItemPickupRay3D : RayCast3D, IInputReceiver
 	public override void _Ready()
 	{
 		base._Ready();
-		CollideWithAreas = true;
+		if (!PickupRaycast.CollideWithAreas)
+			Log.Error($"This ItemPickup3D probably can't use this RayCast3D because it cannot collide with areas.");
+		
 	}
 
-	private void AttemptPickup(ItemPickupArea3D itemPick)
+	private void AttemptPickup(IPickup pickup)
 	{
 		if (InventoryComponent is null)
+		{
+			Log.Info($"{this} tried to pick up {pickup}, but there was no inventory to put it on.");
 			return;
-			
-		int slot = InventoryComponent.GetEmptySlot();
-		IInventoryItem? item = itemPick.GetItem().Pickup() as IInventoryItem;
-		
-		InventoryComponent.Contents[slot] = item;
+		}
+
+		//Get the item
+		IInventoryItem? item = pickup.Pickup();
+
+		//Add it to the inventory.
+		InventoryComponent.ChangeItem(
+			new(IInventory.INVALID_SLOT, item)
+			);
+		Log.Info($"{this} picked up {pickup}.");
 	}
 
 	public void ReceiveInput(string action)
 	{
-		var collider = GetCollider() as ItemPickupArea3D;
+		var collider = PickupRaycast.GetCollider() as ItemPickupArea3D;
 		if (collider is null)
 		{
 			Log.Info($"{GetPath()} tried to pick up {collider?.GetPath() ?? "nothing"} and failed as it was not a valid item.");
@@ -53,6 +64,6 @@ public partial class ItemPickupRay3D : RayCast3D, IInputReceiver
 		}
 
 		AttemptPickup(collider);
-		Log.Info($"{GetPath()} picked up {collider.GetPath()}");
+		Log.Info($"{GetPath()} picked up {collider.GetItem()}");
 	}
 }

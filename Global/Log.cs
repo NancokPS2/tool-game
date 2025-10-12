@@ -11,4 +11,10 @@ public static class Log
 		GD.Print(info);
 		Console.WriteLine(info);
 	}
+
+	internal static void Error(string error)
+	{
+		GD.PushError(error);
+		Console.Error.WriteLine(error);
+	}
 }

@@ -24,6 +24,12 @@ InputManagerSingleton="res://Singleton/InputManager/InputManager.cs"
 
 project/assembly_name="ToolGame"
 
+[file_customization]
+
+folder_colors={
+"res://Scenes/Tests/": "yellow"
+}
+
 [input]
 
 interact={
