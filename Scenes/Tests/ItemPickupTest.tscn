@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://4dv4kkhop66y"]
+
+[ext_resource type="Script" uid="uid://bnir8yirbyiev" path="res://Scenes/Inventory/Item/NodeItemizer3D.cs" id="1_530f5"]
+[ext_resource type="Texture2D" uid="uid://bk8lmsvori6h5" path="res://icon.svg" id="2_hcg28"]
+[ext_resource type="Script" uid="uid://cslcwxau0x0g4" path="res://Scenes/Inventory/Item/ItemPickupRay3D.cs" id="3_hcg28"]
+[ext_resource type="Script" uid="uid://c5yrdmic5u8ja" path="res://Scenes/Inventory/Item/ItemPickupArea3D.cs" id="4_7uth0"]
+[ext_resource type="Script" uid="uid://chsb6f8xbfpsq" path="res://Scenes/Input/InputReader.cs" id="5_2klb3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7uth0"]
+
+[node name="ItemPickupTest" type="Node3D"]
+
+[node name="NodeItemizer3D" type="Node3D" parent="."]
+script = ExtResource("1_530f5")
+Icon = ExtResource("2_hcg28")
+metadata/_custom_type_script = "uid://bnir8yirbyiev"
+
+[node name="ItemPickupRay3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.63273, 0)
+hit_from_inside = true
+collide_with_areas = true
+script = ExtResource("3_hcg28")
+triggeringActions = Array[String](["interact"])
+metadata/_custom_type_script = "uid://cslcwxau0x0g4"
+
+[node name="ItemPickupArea3D" type="Area3D" parent="."]
+script = ExtResource("4_7uth0")
+metadata/_custom_type_script = "uid://c5yrdmic5u8ja"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemPickupArea3D"]
+shape = SubResource("BoxShape3D_7uth0")
+
+[node name="InputReader" type="Node" parent="." node_paths=PackedStringArray("receivers")]
+script = ExtResource("5_2klb3")
+InputDevice = 0
+receivers = [NodePath("../ItemPickupRay3D")]
+metadata/_custom_type_script = "uid://chsb6f8xbfpsq"

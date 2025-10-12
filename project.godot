@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Systems="*res://Scenes/Singletons/Systems.tscn"
+InputManagerSingleton="res://Singleton/InputManager/InputManager.cs"
 
 [dotnet]
 

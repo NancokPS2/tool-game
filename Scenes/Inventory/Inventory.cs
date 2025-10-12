@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
-namespace ToolGame.Container;
 
 [GlobalClass]
 public partial class Inventory : Node, IComponent
@@ -15,7 +10,7 @@ public partial class Inventory : Node, IComponent
 		{
 			Contents = value.ToDictionary(
 				pair => pair.Key,
-				pair => pair.Value as IItem ?? null
+				pair => pair.Value as IInventoryItem ?? null
 			);
 			foreach (var item in Contents.Values)
 			{
@@ -32,7 +27,7 @@ public partial class Inventory : Node, IComponent
 			);
 		}
 	}
-	public Dictionary<int, IItem?> Contents = new();
+	public Dictionary<int, IInventoryItem?> Contents = new();
 
 	[Export]
 	public int Selected

@@ -4,6 +4,6 @@ namespace ToolGame.Interface;
 
 public interface IInventory
 {
-	public IItem Selected { set; get; }
-	public List<IItem> Contents { set; get; }
+	public IPickup Selected { set; get; }
+	public List<IPickup> Contents { set; get; }
 }

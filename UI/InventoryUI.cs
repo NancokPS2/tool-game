@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using ToolGame.Container;
-using ToolGame.Scenes.Items;
-using ToolGame.Scenes.Mob;
 
 namespace ToolGame;
 
@@ -48,7 +42,7 @@ public partial class InventoryUI : Control
 
 		if (PickupRay.GetCollider() is ItemPickupArea3D area)
 		{
-			ItemName.Text = area.GetItem()?.ItemName ?? "UNKNOWN";
+			ItemName.Text = (area.GetItem() as IInventoryItem)?.ItemName ?? "UNKNOWN";
 		}
 		else
 			ItemName.Text = (PickupRay.GetCollider() as Node)?.Name ?? "NONE";

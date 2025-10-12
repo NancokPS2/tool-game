@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ToolGame.Container;
 
 namespace ToolGame.Singleton.GameSystem;
 
@@ -18,7 +17,7 @@ public partial class InventorySystem : BaseSystem
 		Instance = this;
 	}
 
-	public static IItem? GetSelectedItem(ulong entityId)
+	public static IInventoryItem? GetSelectedItem(ulong entityId)
 	{
 		Inventory? inventoryComp = ECSManager.GetComponent<Inventory>(entityId);
 		if (inventoryComp is null || inventoryComp.Contents.Count() == 0)
