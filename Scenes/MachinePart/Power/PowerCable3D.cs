@@ -1,5 +1,7 @@
+using System.Linq;
+
 [GlobalClass]
-public partial class PowerCable3D : Node3D
+public partial class PowerCable3D : ConnectorCable3D, IConnector
 {
 	public enum EPowerDirection
 	{
@@ -29,6 +31,41 @@ public partial class PowerCable3D : Node3D
 
 	[Export]
 	public double TransferRate = 10;
+
+	public override void Connect(IConnectorPort port, uint side)
+	{
+		base.Connect(port, side);
+
+		if (port is IPowerContainer container)
+		{
+			switch (side)
+			{
+				case 0:
+					ContainerA = container;
+					break;
+
+				case 1:
+					ContainerB = container;
+					break;
+
+				default:
+					throw new Exception();
+			}
+		}
+
+	}
+
+	public override uint[] GetSides() => [0, 1];
+
+	public override void _Ready()
+	{
+		base._Ready();
+		if (containerA is IPowerContainer)
+			Connect(containerA, 0);
+
+		if (containerB is IPowerContainer)
+			Connect(containerB, 1);
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -82,6 +119,4 @@ public partial class PowerCable3D : Node3D
 				throw new Exception();
 		}
 	}
-
-
 }
