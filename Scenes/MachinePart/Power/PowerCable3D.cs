@@ -13,65 +13,43 @@ public partial class PowerCable3D : ConnectorCable3D, IConnector
 	[Export]
 	public EPowerDirection PowerDirection;
 
-	public IPowerContainer? ContainerA;
 	[Export]
-	protected PowerContainer3D? containerA
-	{
-		set => ContainerA = value;
-		get => ContainerA as PowerContainer3D ?? null;
-	}
+	protected PowerContainer3D? ContainerNodeA;
 
-	public IPowerContainer? ContainerB;
 	[Export]
-	protected PowerContainer3D? containerB
-	{
-		set => ContainerB = value;
-		get => ContainerB as PowerContainer3D ?? null;
-	}
+	protected PowerContainer3D? ContainerNodeB;
 
 	[Export]
 	public double TransferRate = 10;
 
-	public override void Connect(IConnectorPort port, uint side)
-	{
-		base.Connect(port, side);
-
-		if (port is IPowerContainer container)
-		{
-			switch (side)
-			{
-				case 0:
-					ContainerA = container;
-					break;
-
-				case 1:
-					ContainerB = container;
-					break;
-
-				default:
-					throw new Exception();
-			}
-		}
-
-	}
+	public override bool IsValid<TConnected>(TConnected connected, uint side)
+		=> connected is IPowerContainer;
 
 	public override uint[] GetSides() => [0, 1];
 
 	public override void _Ready()
 	{
 		base._Ready();
-		if (containerA is IPowerContainer)
-			Connect(containerA, 0);
+		if (ContainerNodeA is IPowerContainer)
+			Connect(ContainerNodeA, 0);
 
-		if (containerB is IPowerContainer)
-			Connect(containerB, 1);
+		if (ContainerNodeB is IPowerContainer)
+			Connect(ContainerNodeB, 1);
+	}
+
+	protected IPowerContainer? GetContainer(uint side)
+	{
+		return Connections[side] as IPowerContainer ?? null;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		IPowerContainer? containerA = GetContainer(0);
+		IPowerContainer? containerB = GetContainer(1);
+		
 		//Abort if there's no containers connected.
-		if (ContainerA == null || ContainerB == null)
+		if (containerA is null || containerB is null)
 			return;
 
 		switch (PowerDirection)
@@ -79,8 +57,8 @@ public partial class PowerCable3D : ConnectorCable3D, IConnector
 			case EPowerDirection.FORWARD:
 				IPowerContainer.TransferPower(
 					new(
-						ContainerA,
-						ContainerB,
+						containerA,
+						containerB,
 						TransferRate,
 						delta)
 					);
@@ -89,27 +67,27 @@ public partial class PowerCable3D : ConnectorCable3D, IConnector
 			case EPowerDirection.REVERSE:
 				IPowerContainer.TransferPower(
 					new(
-						ContainerB,
-						ContainerA,
+						containerB,
+						containerA,
 						TransferRate,
 						delta)
 					);
 				break;
 
 			case EPowerDirection.EQUALIZE:
-				if (ContainerA.Stored > ContainerB.Stored)
+				if (containerA.Stored > containerB.Stored)
 					IPowerContainer.TransferPower(
 					new(
-						ContainerA,
-						ContainerB,
+						containerA,
+						containerB,
 						TransferRate,
 						delta)
 					);
-				else if (ContainerA.Stored < ContainerB.Stored)
+				else if (containerA.Stored < containerB.Stored)
 					IPowerContainer.TransferPower(
 					new(
-						ContainerB,
-						ContainerA,
+						containerB,
+						containerA,
 						TransferRate,
 						delta)
 					);

@@ -1,22 +1,55 @@
-[gd_scene load_steps=3 format=3 uid="uid://bn4y1cwc4uhky"]
+[gd_scene load_steps=5 format=3 uid="uid://bn4y1cwc4uhky"]
 
 [ext_resource type="Script" uid="uid://bl7qj6xvr68s5" path="res://Scenes/MachinePart/Power/PowerContainer3D.cs" id="1_7sxul"]
 [ext_resource type="Script" uid="uid://b7g05uyxqveoh" path="res://Scenes/MachinePart/Power/PowerCable3D.cs" id="2_cc68p"]
+[ext_resource type="Script" uid="uid://dp562mprtvq5p" path="res://Scenes/MachinePart/Data/DataDisplay3D.cs" id="3_da11f"]
+[ext_resource type="Script" uid="uid://yi75s17e5436" path="res://Scenes/MachinePart/Data/ConnectorDataStringCable3D.cs" id="4_ayjty"]
 
 [node name="PowerTest" type="Node3D"]
 
 [node name="PowerContainer3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34942, 0)
 script = ExtResource("1_7sxul")
 connectorFilters = Array[int]([0])
 metadata/_custom_type_script = "uid://bl7qj6xvr68s5"
+
+[node name="DataDisplay3D" type="Node3D" parent="PowerContainer3D" node_paths=PackedStringArray("LabelNode")]
+script = ExtResource("3_da11f")
+LabelNode = NodePath("Label3D")
+connectorFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://dp562mprtvq5p"
+
+[node name="Label3D" type="Label3D" parent="PowerContainer3D/DataDisplay3D"]
+text = "UNSET"
+
+[node name="ConnectorDataStringCable3D" type="Node3D" parent="PowerContainer3D" node_paths=PackedStringArray("DataProvider", "DataReceiver")]
+script = ExtResource("4_ayjty")
+DataProvider = NodePath("..")
+DataReceiver = NodePath("../DataDisplay3D")
+metadata/_custom_type_script = "uid://yi75s17e5436"
 
 [node name="PowerContainer3D2" type="Node3D" parent="."]
 script = ExtResource("1_7sxul")
 connectorFilters = Array[int]([0])
 metadata/_custom_type_script = "uid://bl7qj6xvr68s5"
 
-[node name="PowerCable3D" type="Node3D" parent="." node_paths=PackedStringArray("containerA", "containerB")]
+[node name="DataDisplay3D" type="Node3D" parent="PowerContainer3D2" node_paths=PackedStringArray("LabelNode")]
+script = ExtResource("3_da11f")
+LabelNode = NodePath("Label3D")
+connectorFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://dp562mprtvq5p"
+
+[node name="Label3D" type="Label3D" parent="PowerContainer3D2/DataDisplay3D"]
+text = "UNSET"
+
+[node name="ConnectorDataStringCable3D" type="Node3D" parent="PowerContainer3D2" node_paths=PackedStringArray("DataProvider", "DataReceiver")]
+script = ExtResource("4_ayjty")
+DataProvider = NodePath("..")
+DataReceiver = NodePath("../DataDisplay3D")
+metadata/_custom_type_script = "uid://yi75s17e5436"
+
+[node name="PowerCable3D" type="Node3D" parent="." node_paths=PackedStringArray("ContainerNodeA", "ContainerNodeB")]
 script = ExtResource("2_cc68p")
-containerA = NodePath("../PowerContainer3D")
-containerB = NodePath("../PowerContainer3D2")
+ContainerNodeA = NodePath("../PowerContainer3D")
+ContainerNodeB = NodePath("../PowerContainer3D2")
 metadata/_custom_type_script = "uid://b7g05uyxqveoh"

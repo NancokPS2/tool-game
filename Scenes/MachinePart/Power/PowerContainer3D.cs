@@ -2,7 +2,7 @@
 using ToolGame.Scenes.MachinePart.Connector;
 
 [GlobalClass]
-public partial class PowerContainer3D : Node3D, IPowerContainer, IConnectorPort
+public partial class PowerContainer3D : Node3D, IPowerContainer, IConnectorPort, IDataProvider
 {
 	private const int BASE_POWER = 1000;
 
@@ -22,4 +22,7 @@ public partial class PowerContainer3D : Node3D, IPowerContainer, IConnectorPort
 		set => ConnectorFilters = [.. value];
 		get => [.. ConnectorFilters];
 	}
+
+	public string GetData()
+		=> $"{Stored.ToString("F2")}/{Max.ToString("F2")}";
 }

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca23raw6grddt"]
+
+[ext_resource type="Script" uid="uid://dp562mprtvq5p" path="res://Scenes/MachinePart/Data/DataDisplay3D.cs" id="1_yg8u0"]
+[ext_resource type="Script" uid="uid://cdinf5moxy74i" path="res://Scenes/MachinePart/Data/DataStreamer3D.cs" id="2_7kkpv"]
+[ext_resource type="Script" uid="uid://yi75s17e5436" path="res://Scenes/MachinePart/Data/ConnectorDataStringCable3D.cs" id="3_tdtl7"]
+
+[node name="DataTransferTest" type="Node3D"]
+
+[node name="DataDisplay3D" type="Node3D" parent="." node_paths=PackedStringArray("LabelNode")]
+script = ExtResource("1_yg8u0")
+LabelNode = NodePath("Label3D")
+connectorFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://dp562mprtvq5p"
+
+[node name="Label3D" type="Label3D" parent="DataDisplay3D"]
+text = "UNSET_TEXT"
+
+[node name="DataStreamer3D" type="Node3D" parent="."]
+script = ExtResource("2_7kkpv")
+dataSets = Array[String](["Hello", "World", "Augh", "Susus Amogus"])
+connectorFilters = Array[int]([0])
+metadata/_custom_type_script = "uid://cdinf5moxy74i"
+
+[node name="ConnectorDataStringCable3D" type="Node3D" parent="." node_paths=PackedStringArray("DataProvider", "DataReceiver")]
+script = ExtResource("3_tdtl7")
+DataProvider = NodePath("../DataStreamer3D")
+DataReceiver = NodePath("../DataDisplay3D")
+metadata/_custom_type_script = "uid://yi75s17e5436"
