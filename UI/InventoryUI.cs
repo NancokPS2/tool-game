@@ -1,7 +1,9 @@
 using System.Linq;
 [GlobalClass]
-public partial class InventoryUI : Control
+public partial class InventoryUI : Control, IInputReceiver
 {
+	public delegate void SlotSelection(int slot);
+	public event SlotSelection? SlotSelected;
 
 	public IInventory InventoryComponent = null!;
 	[Export]
@@ -39,6 +41,7 @@ public partial class InventoryUI : Control
 		}
 	}
 
+	public string[] TriggeringActions { get; set; } = [InputManager.INPUT_PREV_ITEM, InputManager.INPUT_NEXT_ITEM];
 
 	private int hotbarSlotSelected;
 
@@ -90,10 +93,25 @@ public partial class InventoryUI : Control
 	{
 		for (int hotbarIndex = 0; hotbarIndex < HotbarSlots.Count(); hotbarIndex++)
 		{
-			HotbarSlots[hotbarIndex].SetItem(
-				InventoryComponent.GetItem(hotbarIndex)
-				);
-		
+			HotbarSlot slot = HotbarSlots[hotbarIndex];
+			slot.SetSelected(HotbarSlotSelected == hotbarIndex);
+			slot.SetItem(InventoryComponent.GetItem(hotbarIndex));
+		}
+	}
+
+	public void ReceiveInput(string action)
+	{
+		if (action == InputManager.INPUT_NEXT_ITEM)
+		{
+			HotbarSlotSelected++;
+			UpdateHotbar();
+			SlotSelected?.Invoke(HotbarSlotSelected);
+		}
+		else if (action == InputManager.INPUT_PREV_ITEM)
+		{
+			HotbarSlotSelected--;
+			UpdateHotbar();
+			SlotSelected?.Invoke(HotbarSlotSelected);
 		}
 	}
 }

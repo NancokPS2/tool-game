@@ -8,6 +8,9 @@ public partial class HotbarSlot : TextureRect
 	public Texture2D? EmptyTexture { get => emptyTexture; set => emptyTexture = value; }
 	private Texture2D? emptyTexture;
 
+	[Export]
+	public CanvasItem Highlight = null!;
+
 	public IInventoryItem? Item { protected set; get; }
 
 	public void SetItem(IInventoryItem? item)
@@ -15,5 +18,10 @@ public partial class HotbarSlot : TextureRect
 		Item = item;
 		Texture = item?.Icon ?? EmptyTexture;
 		ItemChanged?.Invoke(item);
+	}
+
+	public void SetSelected(bool selected)
+	{
+		Highlight.Visible = selected;
 	}
 }

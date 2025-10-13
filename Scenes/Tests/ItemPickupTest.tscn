@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://cslcwxau0x0g4"
 [node name="InputReader" type="Node" parent="." node_paths=PackedStringArray("receivers")]
 script = ExtResource("5_2klb3")
 InputDevice = 0
-receivers = [NodePath("../ItemPickup3D")]
+receivers = [NodePath("../ItemPickup3D"), NodePath("../InventoryUI")]
 metadata/_custom_type_script = "uid://chsb6f8xbfpsq"
 
 [node name="BallItem" parent="." instance=ExtResource("1_eqfqv")]
@@ -29,7 +29,7 @@ script = ExtResource("6_ovens")
 MinimumSlots = 9
 metadata/_custom_type_script = "uid://b6ixlf866q3wq"
 
-[node name="Control" parent="." node_paths=PackedStringArray("inventoryComponent", "ItemPickup") instance=ExtResource("5_ovens")]
+[node name="InventoryUI" parent="." node_paths=PackedStringArray("inventoryComponent", "ItemPickup") instance=ExtResource("5_ovens")]
 inventoryComponent = NodePath("../Inventory")
 ItemPickup = NodePath("../ItemPickup3D")
 

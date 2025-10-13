@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bmiqjvgk5rjwn" path="res://UI/InventoryUI.cs" id="1_xufhh"]
 [ext_resource type="PackedScene" uid="uid://drjd3jij3leec" path="res://UI/HotbarSlot.tscn" id="2_la3np"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("ItemName", "HotbarSlotsParent")]
+[node name="InventoryUI" type="Control" node_paths=PackedStringArray("ItemName", "HotbarSlotsParent")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

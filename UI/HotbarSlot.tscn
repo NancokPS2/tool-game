@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://drjd3jij3leec"]
+[gd_scene load_steps=6 format=3 uid="uid://drjd3jij3leec"]
 
 [ext_resource type="Script" uid="uid://4yiki3ayjv83" path="res://UI/HotbarSlot.cs" id="1_nmgbl"]
 
@@ -7,9 +7,33 @@
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_itwfp"]
 gradient = SubResource("Gradient_g743x")
 
-[node name="TextureRect" type="TextureRect"]
+[sub_resource type="Gradient" id="Gradient_o8wvb"]
+offsets = PackedFloat32Array(0.707792, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6pyi8"]
+gradient = SubResource("Gradient_o8wvb")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" node_paths=PackedStringArray("Highlight")]
 size_flags_horizontal = 3
+size_flags_vertical = 3
 expand_mode = 4
 script = ExtResource("1_nmgbl")
 EmptyTexture = SubResource("GradientTexture2D_itwfp")
+Highlight = NodePath("Highlight")
 metadata/_custom_type_script = "uid://4yiki3ayjv83"
+
+[node name="Highlight" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_6pyi8")

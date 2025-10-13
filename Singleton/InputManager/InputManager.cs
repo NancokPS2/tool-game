@@ -10,14 +10,19 @@ public partial class InputManager : Node
 	public const string INPUT_MOVE_BACKWARD = "move_back";
 	public const string INPUT_MOVE_LEFT = "move_left";
 	public const string INPUT_MOVE_RIGHT = "move_right";
+	public const string INPUT_NEXT_ITEM = "next_item";
+	public const string INPUT_PREV_ITEM = "prev_item";
+	public const string INPUT_USE = "use";
 	public static InputManager Instance = null!;
-	public static readonly string[] ACTION_NAMES = 
+	public static readonly string[] ACTION_NAMES =
 	{
 		INPUT_INTERACT,
 		INPUT_MOVE_FORWARD,
 		INPUT_MOVE_BACKWARD,
 		INPUT_MOVE_LEFT,
 		INPUT_MOVE_RIGHT,
+		INPUT_NEXT_ITEM,
+		INPUT_PREV_ITEM,
 	};
 
 	public override void _Ready()
